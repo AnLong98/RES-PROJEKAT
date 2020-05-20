@@ -15,7 +15,7 @@ using System.IO;
 
 public interface IHistoricalCollection  {
 
-	IModule2Property Properties{
+	List<IModule2Property> Properties{
 		get;
 		set;
 	}

@@ -26,38 +26,40 @@ namespace Module2 {
 	    }
 
 	    /// 
-	    /// <param name="logger"></param>
+	    /// <param name="logger">Logger for this module</param>
 	    public Module2DataAdapter(ILogging logger){
             this.logger = logger;
 	    }
 
 	    /// 
-	    /// <param name="signal"></param>
-	    /// <param name="value"></param>
+	    /// <param name="signal">Signal code</param>
+	    /// <param name="value">Signal value</param>
 	    public Module2Property PackToModule2Property(SignalCode signal, double value){
 
 		    return null;
 	    }
 
 	    /// 
-	    /// <param name="description"></param>
+	    /// <param name="description">Description of dataset from module 1</param>
 	    public CollectionDescription RepackToCollectionDescription(IDescription description){
 
 		    return null;
 	    }
 
 	    /// 
-	    /// <param name="listDescription"></param>
-	    public CollectionDescription RepackToCollectionDescriptionArray(IListDescription listDescription){
+	    /// <param name="listDescription">List description from module 1</param>
+	    public List<CollectionDescription> RepackToCollectionDescriptionArray(IListDescription listDescription){
 
 		    return null;
 	    }
 
 	    /// 
-	    /// <param name="module1Property"></param>
+	    /// <param name="module1Property">Module 1 property to be repacked</param>
 	    public Module2Property RepackToModule2Property(IModule1Property module1Property){
 
-		    return null;
+            Module2Property property = new Module2Property(module1Property.Code, module1Property.Module1Value);
+
+            return property;
 	    }
 
     }//end Module2DataAdapter

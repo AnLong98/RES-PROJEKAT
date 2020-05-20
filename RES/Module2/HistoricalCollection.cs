@@ -27,7 +27,7 @@ public class HistoricalCollection : IHistoricalCollection {
 
 	}
 
-	public IModule2Property Properties(){
+	public List<IModule2Property> Properties{
 
 		return null;
 	}

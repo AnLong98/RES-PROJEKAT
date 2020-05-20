@@ -16,7 +16,7 @@ using System.IO;
 public class Module2Property : IModule2Property {
 
 	private SignalCode code;
-	private double value;
+	private double codeValue;
 
 
 
@@ -25,14 +25,15 @@ public class Module2Property : IModule2Property {
 	}
 
 	/// 
-	/// <param name="code"></param>
-	/// <param name="value"></param>
+	/// <param name="code">Signal code for property</param>
+	/// <param name="value">Value for property</param>
 	public Module2Property(SignalCode code, double value){
-
+        this.code = code;
+        this.codeValue = value;
 	}
 
 	public Module2Property(){
-
+        
 	}
 
 	public SignalCode Code{
@@ -46,10 +47,10 @@ public class Module2Property : IModule2Property {
 
 	public double Value{
 		get{
-			return value;
+			return codeValue;
 		}
 		set{
-			value = value;
+			codeValue = value;
 		}
 	}
 
