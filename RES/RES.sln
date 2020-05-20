@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{DE8C8630-2B3E-4570-BA68-98BFC003A86C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module2", "Module2\Module2.csproj", "{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{D28BAD7F-003B-446B-A018-68F233656D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D28BAD7F-003B-446B-A018-68F233656D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D28BAD7F-003B-446B-A018-68F233656D25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
