@@ -11,33 +11,34 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+namespace LoggerSpace
+{
+    public class LogWriter {
 
+	    private string filename;
 
-public class LogWriter {
+	    ~LogWriter(){
 
-	private string filename;
+	    }
 
-	~LogWriter(){
+	    /// 
+	    /// <param name="filename"></param>
+	    public LogWriter(string filename){
+            this.filename = filename;
+	    }
 
-	}
-
-	public LogWriter(){
-
-	}
-
-	/// 
-	/// <param name="filename"></param>
-	public LogWriter(string filename){
-        this.filename = filename;
-	}
-
-	/// 
-	/// <param name="message"></param>
-	public void WriteToFile(string message){
-        using (StreamWriter writer = File.AppendText(filename))
-        {
-            writer.WriteLine(message);
+	    /// 
+	    /// <param name="message"></param>
+	    public void WriteToFile(string message){
+            using (StreamWriter writer = File.AppendText(filename))
+            {
+                writer.WriteLine(message);
+            }
         }
-    }
 
-}//end LogWriter
+    }//end LogWriter
+
+}
+
+
+

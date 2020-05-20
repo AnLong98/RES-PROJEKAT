@@ -11,28 +11,31 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+namespace LoggerSpace
+{
+    public class LogMessage {
+
+	    private string message;
+
+	    public LogMessage(string message){
+            this.message = message;
+	    }
+
+	    ~LogMessage(){
+
+	    }
+
+	    public string GetInfoMessage(){
+
+            return string.Format("[INFO] {0}", message);
+	    }
+
+	    public string GetWarningMessage(){
+
+            return string.Format("[WARNING] {0}", message);
+        }
+
+    }//end LogMessage
+}
 
 
-public class LogMessage {
-
-	private string message;
-
-	public LogMessage(string message){
-        this.message = message;
-	}
-
-	~LogMessage(){
-
-	}
-
-	public string GetInfoMessage(){
-
-        return string.Format("[INFO] {0}", message);
-	}
-
-	public string GetWarningMessage(){
-
-        return string.Format("[WARNING] {0}", message);
-    }
-
-}//end LogMessage

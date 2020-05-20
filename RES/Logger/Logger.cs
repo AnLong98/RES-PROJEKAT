@@ -12,7 +12,7 @@ using System.Text;
 using System.IO;
 using Common;
 
-namespace Logger
+namespace LoggerSpace
 {
     public class Logger : ILogging {
 
