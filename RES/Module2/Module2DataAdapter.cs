@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Common;
 
 namespace Module2 {
     public class Module2DataAdapter {
@@ -27,7 +28,7 @@ namespace Module2 {
 	    /// 
 	    /// <param name="logger"></param>
 	    public Module2DataAdapter(ILogging logger){
-
+            this.logger = logger;
 	    }
 
 	    /// 
