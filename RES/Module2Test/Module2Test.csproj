@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdaptersTest\Module2DataAdapterTest.cs" />
     <Compile Include="ModelsTest\CollectionDescriptionTest.cs" />
     <Compile Include="ModelsTest\HistoricalCollectionTest.cs" />
     <Compile Include="ModelsTest\Module2PropertyTest.cs" />

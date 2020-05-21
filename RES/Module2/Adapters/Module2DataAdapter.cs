@@ -31,7 +31,7 @@ namespace Module2 {
 	    /// <param name="signal">Signal code</param>
 	    /// <param name="value">Signal value</param>
 	    public Module2Property PackToModule2Property(SignalCode signal, double value){
-
+            logger.LogNewInfo(string.Format("Packing module 2 property for signal {0} and value {1}", signal, value));
             return new Module2Property(signal, value);
 	    }
 
@@ -49,7 +49,7 @@ namespace Module2 {
             {
                     if (DatasetRepository.GetDataset(property.Code) != dataset)
                     {
-                        logger.LogNewWarning(string.Format("Received data set {0} does not match data set for signal {1}", dataset, property.Code));
+                        logger.LogNewWarning(string.Format("Received dataset {0} does not match dataset for signal {1}", dataset, property.Code));
                         throw new ArgumentException("Data set does not match signal.");
                     }
 
