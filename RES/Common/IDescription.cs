@@ -37,7 +37,7 @@ public interface IDescription  {
 		set;
 	}
 
-	IModule1Property Properties();
+	List<IModule1Property> Properties();
 
 	/// 
 	/// <param name="property"></param>
