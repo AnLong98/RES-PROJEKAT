@@ -36,14 +36,18 @@ namespace Module2 {
 	    /// <param name="value">Signal value</param>
 	    public Module2Property PackToModule2Property(SignalCode signal, double value){
 
-		    return null;
+            return new Module2Property(signal, value);
 	    }
 
 	    /// 
 	    /// <param name="description">Description of dataset from module 1</param>
 	    public CollectionDescription RepackToCollectionDescription(IDescription description){
 
-		    return null;
+            int id = description.ID;
+            Dataset dataset = description.Dataset;
+            List<Module2Property> properties = new List<Module2Property>();
+
+            foreach(IModule1Property property in description.Properties())
 	    }
 
 	    /// 
