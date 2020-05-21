@@ -18,5 +18,5 @@ public interface IModule2History  {
 	/// 
 	/// <param name="startDate"></param>
 	/// <param name="endDate"></param>
-	IModule2Property ReadHistory(DateTime startDate, DateTime endDate);
+	List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate);
 }//end IModule2History

@@ -19,7 +19,7 @@ public interface IListDescription  {
 	/// <param name="description"></param>
 	void AddOrReplaceDescription(IDescription description);
 
-	IDescription Descriptions{
+	List<IDescription> Descriptions{
 		get;
 		set;
 	}
