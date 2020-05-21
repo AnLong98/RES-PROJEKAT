@@ -15,7 +15,7 @@ using System.IO;
 
 public class HistoricalCollection : IHistoricalCollection {
 
-	public List<Module2Property> properties;
+	private List<IModule2Property> properties;
 
 
 
@@ -24,12 +24,19 @@ public class HistoricalCollection : IHistoricalCollection {
 	}
 
 	public HistoricalCollection(){
-
+        properties = new List<IModule2Property>();
 	}
 
 	public List<IModule2Property> Properties{
 
-		return null;
+        get
+        {
+            return properties;
+        }
+        set
+        {
+            properties = value;
+        }
 	}
 
 }//end HistoricalCollection

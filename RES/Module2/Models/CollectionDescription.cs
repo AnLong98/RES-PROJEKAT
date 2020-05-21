@@ -18,15 +18,15 @@ public class CollectionDescription : ICollectionDescription {
 	private Dataset dataset;
 	private int id;
 	private static int staticID = 20;
-	public IHistoricalCollection collection;
+	private IHistoricalCollection collection;
 
 	public CollectionDescription(){
-        this.id = AssignId();
-	}
+        this.id = CreateUniqueId(staticID);
+        staticID = id;
+    }
 
-    public CollectionDescription(Dataset dataset, HistoricalCollection collection)
+    public CollectionDescription(Dataset dataset, IHistoricalCollection collection) : this()
     {
-        this.id = AssignId();
         this.dataset = dataset;
         this.collection = collection;
     }
@@ -70,21 +70,29 @@ public class CollectionDescription : ICollectionDescription {
 	}
 
 
-    private static int AssignId()
+    public static int CreateUniqueId(int staticID)
     {
+
+        if (staticID < 10) throw new ArgumentException("static id should be double digit value at least");
+
         int newId = staticID + 1;
+        int firstNumber = int.Parse(staticID.ToString().Substring(0, 1));
         string newIDString = newId.ToString();
 
 
-        if(newIDString[0] == '3')//Should add another zero and change this to 2
+        if(int.Parse(newIDString.Substring(0,1)) == firstNumber +  1)//Should add another zero and decrement first number
         {
-            newIDString = "2" + newIDString.Substring(1);
+            newIDString = firstNumber.ToString() + newIDString.Substring(1);
             newIDString += '0';
             newId = int.Parse(newIDString);
         }
 
-        staticID = newId;
         return newId;
+    }
+
+    public static void ResetStaticClassID()
+    {
+        staticID = 20;
     }
 
 }//end CollectionDescription
