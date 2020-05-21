@@ -45,7 +45,6 @@
     <Compile Include="Dataset.cs" />
     <Compile Include="DatasetRepository.cs" />
     <Compile Include="ICollectionDescription.cs" />
-    <Compile Include="IDateValidation.cs" />
     <Compile Include="IDescription.cs" />
     <Compile Include="IHistoricalCollection.cs" />
     <Compile Include="IListDescription.cs" />
