@@ -17,10 +17,6 @@ namespace Module2 {
 
 	    private ILogging logger;
 
-	    public Module2DataAdapter(){
-
-	    }
-
 	    ~Module2DataAdapter(){
 
 	    }
@@ -41,26 +37,53 @@ namespace Module2 {
 
 	    /// 
 	    /// <param name="description">Description of dataset from module 1</param>
-	    public CollectionDescription RepackToCollectionDescription(IDescription description){
-
+	    public CollectionDescription RepackToCollectionDescription(IDescription description)
+        { 
             int id = description.ID;
             Dataset dataset = description.Dataset;
-            List<Module2Property> properties = new List<Module2Property>();
+
+            logger.LogNewInfo(string.Format("Repacking description with dataset {0} and id {1} to Collection description.", dataset, id));
+            List<IModule2Property> properties = new List<IModule2Property>();
 
             foreach(IModule1Property property in description.Properties())
+            {
+                    if (DatasetRepository.GetDataset(property.Code) != dataset)
+                    {
+                        logger.LogNewWarning(string.Format("Received data set {0} does not match data set for signal {1}", dataset, property.Code));
+                        throw new ArgumentException("Data set does not match signal.");
+                    }
+
+
+                properties.Add(RepackToModule2Property(property));
+            }
+
+            HistoricalCollection historicalCollection = new HistoricalCollection(properties);
+            CollectionDescription repackedData = new CollectionDescription(id, dataset, historicalCollection);
+            logger.LogNewInfo("Data repacked to collection description successfully");
+            return repackedData;
 	    }
 
 	    /// 
 	    /// <param name="listDescription">List description from module 1</param>
 	    public List<CollectionDescription> RepackToCollectionDescriptionArray(IListDescription listDescription){
 
-		    return null;
-	    }
+            logger.LogNewInfo("Repacking List description to Collection description array");
+            List<CollectionDescription> collectionDescriptions = new List<CollectionDescription>();
+
+            foreach(IDescription description in listDescription.Descriptions)
+            {
+                collectionDescriptions.Add(RepackToCollectionDescription(description));
+            }
+
+            logger.LogNewInfo("Repacking List description to Collection description array completed");
+            return collectionDescriptions;
+        }
 
 	    /// 
 	    /// <param name="module1Property">Module 1 property to be repacked</param>
 	    public Module2Property RepackToModule2Property(IModule1Property module1Property){
 
+            logger.LogNewInfo(string.Format("Repacking module 1 property with code {0} and value {1} to Module 2 property.", module1Property.Code, module1Property.Module1Value));
             Module2Property property = new Module2Property(module1Property.Code, module1Property.Module1Value);
 
             return property;

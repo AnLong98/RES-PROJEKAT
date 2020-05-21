@@ -31,6 +31,13 @@ public class CollectionDescription : ICollectionDescription {
         this.collection = collection;
     }
 
+    public CollectionDescription(int id, Dataset dataset, IHistoricalCollection collection)
+    {
+        this.id = id;
+        this.dataset = dataset;
+        this.collection = collection;
+    }
+
     ~CollectionDescription(){
 
 	}

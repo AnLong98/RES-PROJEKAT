@@ -84,5 +84,21 @@ namespace Module2Test.ModelsTest
             return description.ID;
         }
 
+
+        [Test]
+        [TestCase(10, Result=10)]
+        [TestCase(1000, Result=1000)]
+        public int AllParametersConstructor_RegularArguments_IdNotAutoAssigned(int id)
+        {
+            CollectionDescription description = null;
+            CollectionDescription.ResetStaticClassID();
+            Dataset set = Dataset.SET1;
+            var collection = new Mock<IHistoricalCollection>().Object;
+
+            description = new CollectionDescription(id, set, collection);
+
+            return description.ID;
+        }
+
     }
 }

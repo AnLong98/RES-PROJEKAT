@@ -27,7 +27,12 @@ public class HistoricalCollection : IHistoricalCollection {
         properties = new List<IModule2Property>();
 	}
 
-	public List<IModule2Property> Properties{
+    public HistoricalCollection(List<IModule2Property> properties)
+    {
+        this.properties = properties;
+    }
+
+    public List<IModule2Property> Properties{
 
         get
         {
