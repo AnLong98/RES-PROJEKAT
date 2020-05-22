@@ -10,11 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ServiceModel;
 
-
-
+[ServiceContract]
 public interface IModule2History  {
 
+
+    [OperationContract]
 	/// 
 	/// <param name="startDate"></param>
 	/// <param name="endDate"></param>

@@ -10,13 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ServiceModel;
 
-
-
+[ServiceContract]
 public interface IModule1  {
 
-	/// 
-	/// <param name="value"></param>
-	/// <param name="signalCode"></param>
-	bool UpdateDataset(double value, SignalCode signalCode);
+    [OperationContract]
+    /// 
+    /// <param name="value"></param>
+    /// <param name="signalCode"></param>
+    bool UpdateDataset(double value, SignalCode signalCode);
 }//end IModule1
