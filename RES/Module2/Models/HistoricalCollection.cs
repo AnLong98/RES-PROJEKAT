@@ -21,11 +21,6 @@ namespace Module2
 
 
 
-        ~HistoricalCollection()
-        {
-
-        }
-
         public HistoricalCollection()
         {
             properties = new List<IModule2Property>();

@@ -44,9 +44,12 @@ namespace Module2Test
 
         [Test]
         [TestCase("net.tcp://localhost:10100/Module2DirectUpdate", "net.tcp://localhost:10100/Module2Update", "net.tcp://localhost:10100/Module2History")]
-        public void Ping_StartedServerWithAllActiveEndpoints_AssertCanConnectToEndpoints(string directUpdateEndpoint, string updateEndpoint, string historyEndpoint)
+        public void Ping_StartedServerWithAllActiveEndpoints_AssertAllConnectionsAlive(string directUpdateEndpoint, string updateEndpoint, string historyEndpoint)
         {
             ILogging logger = new Mock<ILogging>().Object;
+            IModule2DirectUpdate directProxy = null;
+            IModule2History historyProxy = null;
+            IModule2Update updateProxy = null;
 
             Module2Server server = new Module2Server(logger);
             server.Start();
@@ -55,9 +58,13 @@ namespace Module2Test
             ChannelFactory<IModule2Update> updateFactory = new ChannelFactory<IModule2Update>(new NetTcpBinding());
             ChannelFactory<IModule2DirectUpdate> directUpdateFactory = new ChannelFactory<IModule2DirectUpdate>(new NetTcpBinding());
 
-            Assert.DoesNotThrow(() => historyChannelFactory.CreateChannel(new EndpointAddress(historyEndpoint)));
-            Assert.DoesNotThrow(() => updateFactory.CreateChannel(new EndpointAddress(updateEndpoint)));
-            Assert.DoesNotThrow(() => directUpdateFactory.CreateChannel(new EndpointAddress(directUpdateEndpoint)));
+            Assert.DoesNotThrow(() => historyProxy = historyChannelFactory.CreateChannel(new EndpointAddress(historyEndpoint)));
+            Assert.DoesNotThrow(() => updateProxy =  updateFactory.CreateChannel(new EndpointAddress(updateEndpoint)));
+            Assert.DoesNotThrow(() => directProxy = directUpdateFactory.CreateChannel(new EndpointAddress(directUpdateEndpoint)));
+
+            Assert.IsTrue(historyProxy.Ping());
+            Assert.IsTrue(directProxy.Ping());
+            Assert.IsTrue(updateProxy.Ping());
 
             server.Stop();
         }

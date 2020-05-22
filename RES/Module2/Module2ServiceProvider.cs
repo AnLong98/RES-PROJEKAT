@@ -26,11 +26,6 @@ namespace Module2
         private static readonly double deadbandPercentage = 2;
         private readonly string databaseName = "res_module2.db";
 
-        ~Module2ServiceProvider()
-        {
-
-        }
-
         /// 
         /// <param name="logger">Logger</param>
         public Module2ServiceProvider(ILogging logger)
@@ -85,6 +80,13 @@ namespace Module2
 
         }
 
+        /// <summary>
+        /// Returns true if server is alive, used for connection testing
+        /// </summary>
+        public bool Ping()
+        {
+            return true;
+        }
     }
 
 }//end Module2ServiceProvider

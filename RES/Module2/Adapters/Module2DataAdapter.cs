@@ -17,9 +17,6 @@ namespace Module2 {
 
 	    private ILogging logger;
 
-	    ~Module2DataAdapter(){
-
-	    }
 
 	    /// 
 	    /// <param name="logger">Logger for this module</param>

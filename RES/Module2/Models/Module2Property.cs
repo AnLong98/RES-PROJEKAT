@@ -21,12 +21,6 @@ namespace Module2
         private double codeValue;
 
 
-
-        ~Module2Property()
-        {
-
-        }
-
         /// 
         /// <param name="code">Signal code for property</param>
         /// <param name="value">Value for property</param>

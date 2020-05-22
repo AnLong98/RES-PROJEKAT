@@ -40,11 +40,6 @@ namespace Module2 {
             this.collection = collection;
         }
 
-        ~CollectionDescription()
-        {
-
-        }
-
         public IHistoricalCollection Collection
         {
 
