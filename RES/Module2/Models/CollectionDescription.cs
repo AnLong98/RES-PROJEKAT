@@ -12,94 +12,105 @@ using System.Text;
 using System.IO;
 
 
-
-public class CollectionDescription : ICollectionDescription {
-
-	private Dataset dataset;
-	private int id;
-	private static int staticID = 20;
-	private IHistoricalCollection collection;
-
-	public CollectionDescription(){
-        this.id = CreateUniqueId(staticID);
-        staticID = id;
-    }
-
-    public CollectionDescription(Dataset dataset, IHistoricalCollection collection) : this()
-    {
-        this.dataset = dataset;
-        this.collection = collection;
-    }
-
-    public CollectionDescription(int id, Dataset dataset, IHistoricalCollection collection)
-    {
-        this.id = id;
-        this.dataset = dataset;
-        this.collection = collection;
-    }
-
-    ~CollectionDescription(){
-
-	}
-
-	public IHistoricalCollection Collection{
-
-        get{
-            return collection;
-        }
-        set
-        {
-            collection = value;
-        }
-	}
-
-	public Dataset Dataset{
-		get{
-			return dataset;
-		}
-		set{
-			dataset = value;
-		}
-	}
-
-
-    public int ID{
-
-        get
-        {
-            return id;
-        }
-
-        set
-        {
-            id = value;
-        }
-	}
-
-
-    public static int CreateUniqueId(int staticID)
+namespace Module2 {
+    public class CollectionDescription : ICollectionDescription
     {
 
-        if (staticID < 10) throw new ArgumentException("static id should be double digit value at least");
+        private Dataset dataset;
+        private int id;
+        private static int staticID = 20;
+        private IHistoricalCollection collection;
 
-        int newId = staticID + 1;
-        int firstNumber = int.Parse(staticID.ToString().Substring(0, 1));
-        string newIDString = newId.ToString();
-
-
-        if(int.Parse(newIDString.Substring(0,1)) == firstNumber +  1)//Should add another zero and decrement first number
+        public CollectionDescription()
         {
-            newIDString = firstNumber.ToString() + newIDString.Substring(1);
-            newIDString += '0';
-            newId = int.Parse(newIDString);
+            this.id = CreateUniqueId(staticID);
+            staticID = id;
         }
 
-        return newId;
-    }
+        public CollectionDescription(Dataset dataset, IHistoricalCollection collection) : this()
+        {
+            this.dataset = dataset;
+            this.collection = collection;
+        }
 
-    public static void ResetStaticClassID()
-    {
-        staticID = 20;
+        public CollectionDescription(int id, Dataset dataset, IHistoricalCollection collection)
+        {
+            this.id = id;
+            this.dataset = dataset;
+            this.collection = collection;
+        }
+
+        ~CollectionDescription()
+        {
+
+        }
+
+        public IHistoricalCollection Collection
+        {
+
+            get
+            {
+                return collection;
+            }
+            set
+            {
+                collection = value;
+            }
+        }
+
+        public Dataset Dataset
+        {
+            get
+            {
+                return dataset;
+            }
+            set
+            {
+                dataset = value;
+            }
+        }
+
+
+        public int ID
+        {
+
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+
+
+        public static int CreateUniqueId(int staticID)
+        {
+
+            if (staticID < 10) throw new ArgumentException("static id should be double digit value at least");
+
+            int newId = staticID + 1;
+            int firstNumber = int.Parse(staticID.ToString().Substring(0, 1));
+            string newIDString = newId.ToString();
+
+
+            if (int.Parse(newIDString.Substring(0, 1)) == firstNumber + 1)//Should add another zero and decrement first number
+            {
+                newIDString = firstNumber.ToString() + newIDString.Substring(1);
+                newIDString += '0';
+                newId = int.Parse(newIDString);
+            }
+
+            return newId;
+        }
+
+        public static void ResetStaticClassID()
+        {
+            staticID = 20;
+        }
+
     }
 
 }//end CollectionDescription

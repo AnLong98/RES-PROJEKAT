@@ -23,6 +23,13 @@ namespace Module2Test.AdaptersTest
             adapter = new Module2DataAdapter(logger);
         }
 
+        [TearDown]
+        public void TearDownTests()
+        {
+            logger = null;
+            adapter = null;
+        }
+
 
         [Test]
         [TestCase(SignalCode.CODE_ANALOG, 20.5)]

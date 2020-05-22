@@ -11,47 +11,59 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+namespace Module2
+{
+
+    public class Module2Property : IModule2Property
+    {
+
+        private SignalCode code;
+        private double codeValue;
 
 
-public class Module2Property : IModule2Property {
 
-	private SignalCode code;
-	private double codeValue;
+        ~Module2Property()
+        {
 
+        }
 
+        /// 
+        /// <param name="code">Signal code for property</param>
+        /// <param name="value">Value for property</param>
+        public Module2Property(SignalCode code, double value)
+        {
+            this.code = code;
+            this.codeValue = value;
+        }
 
-	~Module2Property(){
+        public Module2Property()
+        {
 
-	}
+        }
 
-	/// 
-	/// <param name="code">Signal code for property</param>
-	/// <param name="value">Value for property</param>
-	public Module2Property(SignalCode code, double value){
-        this.code = code;
-        this.codeValue = value;
-	}
+        public SignalCode Code
+        {
+            get
+            {
+                return code;
+            }
+            set
+            {
+                code = value;
+            }
+        }
 
-	public Module2Property(){
-        
-	}
-
-	public SignalCode Code{
-		get{
-			return code;
-		}
-		set{
-			code = value;
-		}
-	}
-
-	public double Value{
-		get{
-			return codeValue;
-		}
-		set{
-			codeValue = value;
-		}
-	}
+        public double Value
+        {
+            get
+            {
+                return codeValue;
+            }
+            set
+            {
+                codeValue = value;
+            }
+        }
+    }
 
 }//end Module2Property

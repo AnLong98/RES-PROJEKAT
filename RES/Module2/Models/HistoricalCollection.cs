@@ -11,37 +11,42 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+namespace Module2
+{
 
-
-public class HistoricalCollection : IHistoricalCollection {
-
-	private List<IModule2Property> properties;
-
-
-
-	~HistoricalCollection(){
-
-	}
-
-	public HistoricalCollection(){
-        properties = new List<IModule2Property>();
-	}
-
-    public HistoricalCollection(List<IModule2Property> properties)
+    public class HistoricalCollection : IHistoricalCollection
     {
-        this.properties = properties;
+
+        private List<IModule2Property> properties;
+
+
+
+        ~HistoricalCollection()
+        {
+
+        }
+
+        public HistoricalCollection()
+        {
+            properties = new List<IModule2Property>();
+        }
+
+        public HistoricalCollection(List<IModule2Property> properties)
+        {
+            this.properties = properties;
+        }
+
+        public List<IModule2Property> Properties
+        {
+
+            get
+            {
+                return properties;
+            }
+            set
+            {
+                properties = value;
+            }
+        }
     }
-
-    public List<IModule2Property> Properties{
-
-        get
-        {
-            return properties;
-        }
-        set
-        {
-            properties = value;
-        }
-	}
-
 }//end HistoricalCollection
