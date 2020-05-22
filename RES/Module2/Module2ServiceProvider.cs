@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Common;
+using System.ServiceModel;
 
 namespace Module2
 {
-
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Module2ServiceProvider : IModule2Update, IModule2History, IModule2DirectUpdate
     {
 

@@ -25,7 +25,7 @@ namespace Module2
         private static readonly string directUpdateEndpoint = "net.tcp://localhost:10100/Module2DirectUpdate";
         private static readonly string updateEndpoint = "net.tcp://localhost:10100/Module2Update";
         private static readonly string historyReadingEndpoint = "net.tcp://localhost:10100/Module2History";
-
+        
 
         ~Module2Server()
         {
@@ -49,7 +49,9 @@ namespace Module2
             try
             {
                 serviceHost.Open();
-            }catch(Exception ex)
+                logger.LogNewInfo("Server started");
+            }
+            catch(Exception ex)
             {
                 logger.LogNewWarning(string.Format("Failed to open server, an error occured ERROR MESSAGE:{0}..", ex.Message));
             }
@@ -62,6 +64,7 @@ namespace Module2
             try
             {
                 serviceHost.Close();
+                logger.LogNewInfo("Server stopped");
             }
             catch (Exception ex)
             {
