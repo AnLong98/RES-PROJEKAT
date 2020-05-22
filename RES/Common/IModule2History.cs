@@ -21,4 +21,7 @@ public interface IModule2History  {
 	/// <param name="startDate"></param>
 	/// <param name="endDate"></param>
 	List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate);
+
+    [OperationContract]
+    bool Ping();
 }//end IModule2History
