@@ -20,4 +20,7 @@ public interface IModule1  {
     /// <param name="value"></param>
     /// <param name="signalCode"></param>
     bool UpdateDataset(double value, SignalCode signalCode);
+
+    [OperationContract]
+    bool Ping();
 }//end IModule1
