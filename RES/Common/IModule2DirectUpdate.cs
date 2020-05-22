@@ -10,11 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ServiceModel;
 
-
-
+[ServiceContract]
 public interface IModule2DirectUpdate  {
 
+    [OperationContract]
 	/// 
 	/// <param name="code"></param>
 	/// <param name="value"></param>
