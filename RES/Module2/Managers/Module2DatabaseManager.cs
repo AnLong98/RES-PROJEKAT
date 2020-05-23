@@ -29,11 +29,6 @@ namespace Module2
             databaseConnection.Close();
         }
 
-        public Module2DatabaseManager()
-        {
-            
-        }
-
         /// 
         /// <param name="logger">Logger for this component</param>
         public Module2DatabaseManager(ILogging logger, string databasePath)
@@ -54,7 +49,7 @@ namespace Module2
             string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
 
             string signalCode = code.ToString();
-            string query = "SELECT ID, signalCode, value FROM @tableName" +
+            string query = "SELECT ID, signalCode, signalValue FROM @tableName" +
                            "WHERE signalCode=@code" +
                            "ORDER BY timestamp LIMIT 1";
 
@@ -66,7 +61,7 @@ namespace Module2
             while (reader.Read())
             {
                 string retrievedSignal = reader["signalCode"].ToString();
-                string value = reader["value"].ToString();
+                string value = reader["signalValue"].ToString();
 
                 SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
                 double valueRetrieved = double.Parse(value);
@@ -80,19 +75,72 @@ namespace Module2
         /// 
         /// <param name="periodStart">Beginning of the search period</param>
         /// <param name="periodEnd">End of the search period</param>
-        public List<IModule2Property> ReadPropertiesByTimeframe(DateTime periodStart, DateTime periodEnd)
+        public List<IModule2Property> ReadPropertiesByTimeframe(DateTime periodStart, DateTime periodEnd, SignalCode code)
         {
+            List<IModule2Property> returnList = new List<IModule2Property>();
+            logger.LogNewInfo(string.Format("Reading properties for code {0} with starting date {1}, end date {2}", code, periodEnd, periodEnd));
+            Dataset set = DatasetRepository.GetDataset(code);
+            string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
 
-            return null;
+            string signalCode = code.ToString();
+            string dateStart= periodStart.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+            string dateEnd = periodEnd.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+            string query = "SELECT signalCode, signalValue FROM  @tableName" +
+                           "WHERE signalCode=@code AND" +
+                           "strftime('%s', timestamp) BETWEEN strftime('%s', @startDate) AND strftime('%s', @endDate)" +
+                           "ORDER BY timestamp";
+
+            SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+            command.Parameters.AddWithValue("@code", signalCode);
+            command.Parameters.AddWithValue("@startDate", dateStart);
+            command.Parameters.AddWithValue("@endDate", dateEnd);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                string retrievedSignal = reader["signalCode"].ToString();
+                string value = reader["signalValue"].ToString();
+
+                SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
+                double valueRetrieved = double.Parse(value);
+                Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
+                returnList.Add(property);
+            }
+
+            return returnList;
+
         }
 
         /// 
         /// <param name="property">Module2Property to be written</param>
         /// <param name="timestamp">Time when data arrived to module</param>
-        public void WriteProperty(IModule2Property property, DateTime timestamp)
+        public void WriteProperty(IModule2Property property)
         {
+            logger.LogNewInfo("Writing new property to database.");
+            Dataset set = DatasetRepository.GetDataset(property.Code);
+            string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
 
+            string signalCode = property.Code.ToString();
+            double value = property.Value;
+            string query = "INSERT INTO  @tableName" +
+                           "(signalCode, signalValue)" +
+                           "VALUES(@code, @value)";
+
+            SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+            command.Parameters.AddWithValue("@code", signalCode);
+
+            if(command.ExecuteNonQuery() == 0)
+            {
+                logger.LogNewWarning("Could not write to database.");
+            }
+            else
+            {
+                logger.LogNewInfo("Property written successfully.");
+            }
         }
+
 
     }
     

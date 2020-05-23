@@ -13,10 +13,10 @@ namespace Module2Test.RepositoriesTest
     {
 
         [Test]
-        [TestCase(Dataset.SET1, Result="DataSet1")]
-        [TestCase(Dataset.SET2, Result = "DataSet2")]
-        [TestCase(Dataset.SET3, Result = "DataSet3")]
-        [TestCase(Dataset.SET4, Result = "DataSet4")]
+        [TestCase(Dataset.SET1, Result= "res_dataset1")]
+        [TestCase(Dataset.SET2, Result = "res_dataset2")]
+        [TestCase(Dataset.SET3, Result = "res_dataset3")]
+        [TestCase(Dataset.SET4, Result = "res_dataset4")]
         public string GetTableNameByDataset_AllDatasets_AssertName(Dataset set)
         {
             return DatabaseTableNamesRepository.GetTableNameByDataset(set);

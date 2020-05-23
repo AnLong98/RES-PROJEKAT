@@ -68,18 +68,12 @@ namespace Module2
         /// 
         /// <param name="startDate">Start date</param>
         /// <param name="endDate">End date</param>
-        public List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate)
+        public List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate, SignalCode code)
         {
 
             logger.LogNewInfo(string.Format("Request arrived to read from database with start date {0} and end date {1}", startDate, endDate));
-            List<IModule2Property> returnList = new List<IModule2Property>();
 
-            foreach (IModule2Property module2Property in databaseManager.ReadPropertiesByTimeframe(startDate, endDate))
-            {
-                returnList.Add(module2Property);
-            }
-
-            return returnList;
+            return  databaseManager.ReadPropertiesByTimeframe(startDate, endDate, code);
         }
 
         /// 
@@ -117,11 +111,11 @@ namespace Module2
                 if(lastProperty == null)
                 {
                     logger.LogNewInfo(string.Format("No property found in database for signal code {0}. Writing directly without deadband checking..", module2property.Code));
-                    databaseManager.WriteProperty(module2property, DateTime.Now);
+                    databaseManager.WriteProperty(module2property);
                 }
                 else if(IsDeadbandSatisfied(lastProperty, module2property, deadbandPercentage))
                 {
-                    databaseManager.WriteProperty(module2property, DateTime.Now);
+                    databaseManager.WriteProperty(module2property);
                 }
             }
             return true;
@@ -134,7 +128,7 @@ namespace Module2
         {
             logger.LogNewInfo(string.Format("Writing to history called for code {0} and value {1}", code, value));
             IModule2Property property = dataAdapter.PackToModule2Property(code, value);
-            databaseManager.WriteProperty(property, DateTime.Now);
+            databaseManager.WriteProperty(property);
         }
 
         /// <summary>
