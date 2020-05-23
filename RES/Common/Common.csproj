@@ -52,6 +52,8 @@
     <Compile Include="ILogging.cs" />
     <Compile Include="IModule1.cs" />
     <Compile Include="IModule1Property.cs" />
+    <Compile Include="IModule2DataAdapting.cs" />
+    <Compile Include="IModule2DatabaseManagement.cs" />
     <Compile Include="IModule2DirectUpdate.cs" />
     <Compile Include="IModule2History.cs" />
     <Compile Include="IModule2Property.cs" />

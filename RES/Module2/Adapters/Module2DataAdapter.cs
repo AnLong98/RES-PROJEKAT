@@ -13,7 +13,8 @@ using System.IO;
 using Common;
 
 namespace Module2 {
-    public class Module2DataAdapter {
+    public class Module2DataAdapter : IModule2DataAdapting
+    {
 
 	    private ILogging logger;
 
@@ -24,33 +25,44 @@ namespace Module2 {
             this.logger = logger;
 	    }
 
+        public Module2DataAdapter()
+        {
+
+        }
+
 	    /// 
 	    /// <param name="signal">Signal code</param>
 	    /// <param name="value">Signal value</param>
-	    public Module2Property PackToModule2Property(SignalCode signal, double value){
+	    public IModule2Property PackToModule2Property(SignalCode signal, double value){
             logger.LogNewInfo(string.Format("Packing module 2 property for signal {0} and value {1}", signal, value));
             return new Module2Property(signal, value);
 	    }
 
 	    /// 
 	    /// <param name="description">Description of dataset from module 1</param>
-	    public CollectionDescription RepackToCollectionDescription(IDescription description)
+	    public ICollectionDescription RepackToCollectionDescription(IDescription description)
         { 
             int id = description.ID;
             Dataset dataset = description.Dataset;
 
             logger.LogNewInfo(string.Format("Repacking description with dataset {0} and id {1} to Collection description.", dataset, id));
             List<IModule2Property> properties = new List<IModule2Property>();
+            List<SignalCode> processedSignals = new List<SignalCode>();
 
             foreach(IModule1Property property in description.Properties())
             {
-                    if (DatasetRepository.GetDataset(property.Code) != dataset)
-                    {
-                        logger.LogNewWarning(string.Format("Received dataset {0} does not match dataset for signal {1}", dataset, property.Code));
-                        throw new ArgumentException("Data set does not match signal.");
-                    }
+                if(processedSignals.Contains(property.Code))
+                {
+                    logger.LogNewWarning("Two signals of the same type in one description");
+                    throw new ArgumentException("ERROR Two signals of the same type in one description");
+                }
+                if (DatasetRepository.GetDataset(property.Code) != dataset)
+                {
+                     logger.LogNewWarning(string.Format("Received dataset {0} does not match dataset for signal {1}", dataset, property.Code));
+                     throw new ArgumentException("Data set does not match signal.");
+                }
 
-
+                processedSignals.Add(property.Code);
                 properties.Add(RepackToModule2Property(property));
             }
 
@@ -62,10 +74,10 @@ namespace Module2 {
 
 	    /// 
 	    /// <param name="listDescription">List description from module 1</param>
-	    public List<CollectionDescription> RepackToCollectionDescriptionArray(IListDescription listDescription){
+	    public List<ICollectionDescription> RepackToCollectionDescriptionArray(IListDescription listDescription){
 
             logger.LogNewInfo("Repacking List description to Collection description array");
-            List<CollectionDescription> collectionDescriptions = new List<CollectionDescription>();
+            List<ICollectionDescription> collectionDescriptions = new List<ICollectionDescription>();
 
             foreach(IDescription description in listDescription.Descriptions)
             {
@@ -78,7 +90,7 @@ namespace Module2 {
 
 	    /// 
 	    /// <param name="module1Property">Module 1 property to be repacked</param>
-	    public Module2Property RepackToModule2Property(IModule1Property module1Property){
+	    public IModule2Property RepackToModule2Property(IModule1Property module1Property){
 
             logger.LogNewInfo(string.Format("Repacking module 1 property with code {0} and value {1} to Module 2 property.", module1Property.Code, module1Property.Module1Value));
             Module2Property property = new Module2Property(module1Property.Code, module1Property.Module1Value);

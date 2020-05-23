@@ -17,16 +17,21 @@ using Module2.Repositories;
 namespace Module2
 {
 
-    public class Module2DatabaseManager
+    public class Module2DatabaseManager : IModule2DatabaseManagement
     {
 
         private ILogging logger;
-        SQLiteConnection databaseConnection;
+        private SQLiteConnection databaseConnection;
         private readonly string databaseName;
 
         ~Module2DatabaseManager()
         {
             databaseConnection.Close();
+        }
+
+        public Module2DatabaseManager()
+        {
+            
         }
 
         /// 
@@ -43,7 +48,7 @@ namespace Module2
 
         /// 
         /// <param name="code">Signal code</param>
-        public Module2Property ReadLastByCode(SignalCode code)
+        public IModule2Property ReadLastByCode(SignalCode code)
         {
             Dataset set = DatasetRepository.GetDataset(code);
             string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
@@ -75,7 +80,7 @@ namespace Module2
         /// 
         /// <param name="periodStart">Beginning of the search period</param>
         /// <param name="periodEnd">End of the search period</param>
-        public List<Module2Property> ReadPropertiesByTimeframe(DateTime periodStart, DateTime periodEnd)
+        public List<IModule2Property> ReadPropertiesByTimeframe(DateTime periodStart, DateTime periodEnd)
         {
 
             return null;
@@ -84,7 +89,7 @@ namespace Module2
         /// 
         /// <param name="property">Module2Property to be written</param>
         /// <param name="timestamp">Time when data arrived to module</param>
-        public void WriteProperty(Module2Property property, DateTime timestamp)
+        public void WriteProperty(IModule2Property property, DateTime timestamp)
         {
 
         }
