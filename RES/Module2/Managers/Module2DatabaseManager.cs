@@ -13,6 +13,7 @@ using System.IO;
 using Common;
 using System.Data.SQLite;
 using Module2.Repositories;
+using System.Reflection;
 
 namespace Module2
 {
@@ -26,7 +27,7 @@ namespace Module2
 
         ~Module2DatabaseManager()
         {
-            databaseConnection.Close();
+            databaseConnection.Dispose();
         }
 
         /// 
@@ -37,7 +38,8 @@ namespace Module2
             this.databaseName = databasePath;
 
             if (!File.Exists(databaseName)) throw new Exception("Database does not exist");
-            databaseConnection = new SQLiteConnection(string.Format("Data Source={0}", databaseName));
+            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES"; 
+            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0}\{1};New=False;",path, databaseName));
             databaseConnection.Open();
         }
 
@@ -49,27 +51,29 @@ namespace Module2
             string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
 
             string signalCode = code.ToString();
-            string query = "SELECT ID, signalCode, signalValue FROM @tableName" +
-                           "WHERE signalCode=@code" +
-                           "ORDER BY timestamp LIMIT 1";
+            string query = "SELECT ID, signalCode, signalValue FROM " + tableName +  " WHERE(signalCode=@code) " +
+                           "ORDER BY timestamp DESC LIMIT 1";
 
-            SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
-            command.Parameters.AddWithValue("@tableName", tableName);
-            command.Parameters.AddWithValue("@code", signalCode);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
             {
-                string retrievedSignal = reader["signalCode"].ToString();
-                string value = reader["signalValue"].ToString();
+                command.Parameters.AddWithValue("@code", signalCode);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string retrievedSignal = reader["signalCode"].ToString();
+                        string value = reader["signalValue"].ToString();
 
-                SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
-                double valueRetrieved = double.Parse(value);
-                Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
-                return property;
+                        SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
+                        double valueRetrieved = double.Parse(value);
+                        Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
+                        return property;
+                    }
+
+                    return null;
+                }                    
             }
-
-            return null;
+                
         }
 
         /// 
@@ -83,15 +87,13 @@ namespace Module2
             string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
 
             string signalCode = code.ToString();
-            string dateStart= periodStart.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
-            string dateEnd = periodEnd.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
-            string query = "SELECT signalCode, signalValue FROM  @tableName" +
-                           "WHERE signalCode=@code AND" +
-                           "strftime('%s', timestamp) BETWEEN strftime('%s', @startDate) AND strftime('%s', @endDate)" +
-                           "ORDER BY timestamp";
+            string dateStart= periodStart.ToUniversalTime().ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+            string dateEnd = periodEnd.ToUniversalTime().ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+            string query = @"SELECT signalCode, signalValue FROM " + tableName + " WHERE signalCode=@code AND " + 
+                            "strftime('%s', timestamp) BETWEEN strftime('%s', @startDate) AND strftime('%s', @endDate) " + 
+                            "ORDER BY timestamp DESC ";
 
             SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
-            command.Parameters.AddWithValue("@tableName", tableName);
             command.Parameters.AddWithValue("@code", signalCode);
             command.Parameters.AddWithValue("@startDate", dateStart);
             command.Parameters.AddWithValue("@endDate", dateEnd);
@@ -123,22 +125,23 @@ namespace Module2
 
             string signalCode = property.Code.ToString();
             double value = property.Value;
-            string query = "INSERT INTO  @tableName" +
-                           "(signalCode, signalValue)" +
-                           "VALUES(@code, @value)";
+            string query = @"INSERT INTO " + tableName + "(signalCode, signalValue) VALUES (@code, @value)";
 
-            SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
-            command.Parameters.AddWithValue("@tableName", tableName);
-            command.Parameters.AddWithValue("@code", signalCode);
+            using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
+            {
+                command.Parameters.AddWithValue("@code", signalCode);
+                command.Parameters.AddWithValue("@value", value);
 
-            if(command.ExecuteNonQuery() == 0)
-            {
-                logger.LogNewWarning("Could not write to database.");
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    logger.LogNewWarning("Could not write to database.");
+                }
+                else
+                {
+                    logger.LogNewInfo("Property written successfully.");
+                }
             }
-            else
-            {
-                logger.LogNewInfo("Property written successfully.");
-            }
+                
         }
 
 
