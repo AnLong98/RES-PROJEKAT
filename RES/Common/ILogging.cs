@@ -12,16 +12,14 @@ using System.Text;
 using System.IO;
 
 
-namespace Common
-{
-    public interface ILogging  {
 
-	    /// 
-	    /// <param name="text">Message to be saved to log.</param>
-	    void LogNewInfo(string text);
+public interface ILogging  {
 
-	    /// 
-	    /// <param name="text">Message to be saved to log.</param>
-	    void LogNewWarning(string text);
-    }//end ILogging
-}
+	/// 
+	/// <param name="text"></param>
+	void LogNewInfo(string text);
+
+	/// 
+	/// <param name="text"></param>
+	void LogNewWarning(string text);
+}//end ILogging
