@@ -57,22 +57,31 @@ namespace Module2
             using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
             {
                 command.Parameters.AddWithValue("@code", signalCode);
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        string retrievedSignal = reader["signalCode"].ToString();
-                        string value = reader["signalValue"].ToString();
+                        while (reader.Read())
+                        {
+                            string retrievedSignal = reader["signalCode"].ToString();
+                            string value = reader["signalValue"].ToString();
 
-                        SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
-                        double valueRetrieved = double.Parse(value);
-                        Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
-                        return property;
-                    }
+                            SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
+                            double valueRetrieved = double.Parse(value);
+                            Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
+                            return property;
+                        }
 
+                        return null;
+                    }          
+                }catch(Exception ex)
+                {
+                    logger.LogNewWarning(string.Format("ERROR occured reading database. MESSAGE: {0}", ex.Message));
                     return null;
-                }                    
+                }
             }
+                          
+            
                 
         }
 
@@ -93,23 +102,34 @@ namespace Module2
                             "strftime('%s', timestamp) BETWEEN strftime('%s', @startDate) AND strftime('%s', @endDate) " + 
                             "ORDER BY timestamp DESC ";
 
-            SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
-            command.Parameters.AddWithValue("@code", signalCode);
-            command.Parameters.AddWithValue("@startDate", dateStart);
-            command.Parameters.AddWithValue("@endDate", dateEnd);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
             {
-                string retrievedSignal = reader["signalCode"].ToString();
-                string value = reader["signalValue"].ToString();
+                command.Parameters.AddWithValue("@code", signalCode);
+                command.Parameters.AddWithValue("@startDate", dateStart);
+                command.Parameters.AddWithValue("@endDate", dateEnd);
+                try
+                {
+                    SQLiteDataReader reader = command.ExecuteReader();
 
-                SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
-                double valueRetrieved = double.Parse(value);
-                Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
-                returnList.Add(property);
+                    while (reader.Read())
+                    {
+                        string retrievedSignal = reader["signalCode"].ToString();
+                        string value = reader["signalValue"].ToString();
+                    
+                        SignalCode retrievedCode = (SignalCode)Enum.Parse(typeof(SignalCode), retrievedSignal);
+                        double valueRetrieved = double.Parse(value);
+                        Module2Property property = new Module2Property(retrievedCode, valueRetrieved);
+                        returnList.Add(property);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    logger.LogNewWarning(string.Format("ERROR occured reading database. MESSAGE: {0}", ex.Message));
+                    return returnList;
+                }
             }
-
+            logger.LogNewInfo(string.Format("Found {0} properties within the requested timeframe", returnList.Count));   
             return returnList;
 
         }
