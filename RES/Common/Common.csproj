@@ -48,6 +48,7 @@
     <Compile Include="ICollectionDescription.cs" />
     <Compile Include="IDescription.cs" />
     <Compile Include="IHistoricalCollection.cs" />
+    <Compile Include="IInput.cs" />
     <Compile Include="IListDescription.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="IModule1.cs" />

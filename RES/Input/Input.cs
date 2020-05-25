@@ -10,14 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
+using Common;
+using System.Threading;
 
 namespace Input
 {
-    public class Input
+    public class Input : IInput
     {
 
-        private IModule2History historyWritingProxy;
+        private IModule2DirectUpdate historyWritingProxy;
         private ILogging logger;
         private IModule1 module1Proxy;
 
@@ -35,9 +36,11 @@ namespace Input
         /// <param name="logger"></param>
         /// <param name="historyProxy"></param>
         /// <param name="module1Proxy"></param>
-        public Input(ILogging logger, IModule2History historyProxy, IModule1 module1Proxy)
+        public Input(ILogging logger, IModule2DirectUpdate historyProxy, IModule1 module1Proxy)
         {
-
+            this.logger = logger;
+            this.historyWritingProxy = historyProxy;
+            this.module1Proxy = module1Proxy;
         }
 
         public void ActivateWriting()
@@ -47,13 +50,36 @@ namespace Input
 
         public void GenerateSignals()
         {
+            while(true)
+            {
+                Random rand = new Random();
 
+                int code = rand.Next(8);
+                double value = rand.NextDouble() * 1001;
+
+                module1Proxy.UpdateDataset(value, (SignalCode)code);
+
+                Thread.Sleep(3000);
+            }
         }
 
         public void StartDataFlow()
         {
-
+            Thread t = new Thread(GenerateSignals);
+            t.Start();
         }
 
+        public void sendSignal(int signal, double value)
+        {
+            if(value < 0)
+            {
+                throw new Exception("The value cannot be lower than zero!");
+            }
+            else
+            {
+                historyWritingProxy.WriteToHistory((SignalCode)signal, value);
+            }
+        }
+        
     }//end Input
 }
