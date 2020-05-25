@@ -39,15 +39,10 @@ namespace Input
         public Input(ILogging logger, IModule2DirectUpdate historyProxy, IModule1 module1Proxy)
         {
             this.logger = logger;
-            this.historyWritingProxy = historyProxy;
+            historyWritingProxy = historyProxy;
             this.module1Proxy = module1Proxy;
         }
-
-        public void ActivateWriting()
-        {
-
-        }
-
+        
         public void GenerateSignals()
         {
             while(true)
@@ -71,9 +66,9 @@ namespace Input
 
         public void sendSignal(int signal, double value)
         {
-            if(value < 0)
+            if(value < 0 || signal < 0 || signal > 7)
             {
-                throw new Exception("The value cannot be lower than zero!");
+                throw new Exception("Given values does not match specified interval!");
             }
             else
             {
