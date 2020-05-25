@@ -12,39 +12,48 @@ using System.Text;
 using System.IO;
 
 
+namespace Input
+{
+    public class Input
+    {
 
-public class Input {
+        private IModule2History historyWritingProxy;
+        private ILogging logger;
+        private IModule1 module1Proxy;
 
-	private IModule2History historyWritingProxy;
-	private ILogging logger;
-	private IModule1 module1Proxy;
+        public Input()
+        {
+            
+        }
 
-	public Input(){
+        ~Input()
+        {
 
-	}
+        }
 
-	~Input(){
+        /// 
+        /// <param name="logger"></param>
+        /// <param name="historyProxy"></param>
+        /// <param name="module1Proxy"></param>
+        public Input(ILogging logger, IModule2History historyProxy, IModule1 module1Proxy)
+        {
 
-	}
+        }
 
-	/// 
-	/// <param name="logger"></param>
-	/// <param name="historyProxy"></param>
-	/// <param name="module1Proxy"></param>
-	public Input(ILogging logger, IModule2History historyProxy, IModule1 module1Proxy){
+        public void ActivateWriting()
+        {
 
-	}
+        }
 
-	public void ActivateWriting(){
+        public void GenerateSignals()
+        {
 
-	}
+        }
 
-	public void GenerateSignals(){
+        public void StartDataFlow()
+        {
 
-	}
+        }
 
-	public void StartDataFlow(){
-
-	}
-
-}//end Input
+    }//end Input
+}
