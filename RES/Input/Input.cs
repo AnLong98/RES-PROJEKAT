@@ -22,6 +22,7 @@ namespace Input
         private IModule2DirectUpdate historyWritingProxy;
         private ILogging logger;
         private IModule1 module1Proxy;
+        Thread t;
 
         public Input()
         {
@@ -61,13 +62,14 @@ namespace Input
 
         public void StartDataFlow()
         {
-            Task t = new Task(GenerateSignals);
+            t = new Thread(GenerateSignals);
+            t.IsBackground = true;
             t.Start();
         }
 
-        public void StopDataFlow(Task t)
+        public void StopDataFlow()
         {
-            t.Wait();
+            t.Abort();
         }
 
         public void sendSignal(int signal, double value)
