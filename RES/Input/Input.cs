@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using Common;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Input
 {
@@ -60,15 +61,24 @@ namespace Input
 
         public void StartDataFlow()
         {
-            Thread t = new Thread(GenerateSignals);
+            Task t = new Task(GenerateSignals);
             t.Start();
+        }
+
+        public void StopDataFlow(Task t)
+        {
+            t.Wait();
         }
 
         public void sendSignal(int signal, double value)
         {
-            if(value < 0 || signal < 0 || signal > 7)
+            if(value < 0)
             {
-                throw new Exception("Given values does not match specified interval!");
+                throw new Exception("The value does not match specified interval!");
+            }
+            else if(signal < 0 || signal > 7)
+            {
+                throw new Exception("The value of signal does not match specified interval!");
             }
             else
             {
