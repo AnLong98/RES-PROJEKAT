@@ -13,6 +13,17 @@ namespace InputTest
     [TestFixture]
     public class InputTest
     {
+
+        ILogging log;
+        IModule2DirectUpdate historyProxy;
+        IModule1 modul1Proxy;
+
+        [SetUp]
+        public void SetUp()
+        {
+
+        }
+
         [Test]
         [TestCase(0, 10.0)]
         [TestCase(2, 319.0)]
