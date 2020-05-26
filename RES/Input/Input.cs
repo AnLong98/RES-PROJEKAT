@@ -62,6 +62,7 @@ namespace InputNS
 
         public void StartDataFlow()
         {
+            //logger.LogNewInfo("Input started generating signals and sending it to Modul1.");
             t = new Thread(GenerateSignals);
             t.IsBackground = true;
             t.Start();
@@ -69,6 +70,7 @@ namespace InputNS
 
         public void StopDataFlow()
         {
+            //logger.LogNewInfo("Input stopped generating signals and sending it to Modul1.");
             t.Abort();
         }
 
@@ -84,6 +86,7 @@ namespace InputNS
             }
             else
             {
+                //logger.LogNewInfo("Input sending signal directly to Modul2.");
                 historyWritingProxy.WriteToHistory((SignalCode)signal, value);
             }
         }
