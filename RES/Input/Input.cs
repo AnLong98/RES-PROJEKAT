@@ -54,6 +54,7 @@ namespace InputNS
                 int code = rand.Next(8);
                 double value = rand.NextDouble() * 1001;
 
+                logger.LogNewInfo(String.Format("Input started generating signals and sending it to Modul1 with values {0} - {1}.", code, value));
                 module1Proxy.UpdateDataset(value, (SignalCode)code);
 
                 Thread.Sleep(3000);
@@ -62,7 +63,6 @@ namespace InputNS
 
         public void StartDataFlow()
         {
-            //logger.LogNewInfo("Input started generating signals and sending it to Modul1.");
             t = new Thread(GenerateSignals);
             t.IsBackground = true;
             t.Start();
@@ -70,7 +70,7 @@ namespace InputNS
 
         public void StopDataFlow()
         {
-            //logger.LogNewInfo("Input stopped generating signals and sending it to Modul1.");
+            logger.LogNewInfo("Input stopped generating signals and sending it to Modul1.");
             t.Abort();
         }
 
@@ -78,15 +78,17 @@ namespace InputNS
         {
             if(value < 0)
             {
+                logger.LogNewWarning("User sent invalid data for value.");
                 throw new Exception("The value does not match specified interval!");
             }
             else if(signal < 0 || signal > 7)
             {
+                logger.LogNewWarning("User sent invalid data for signal.");
                 throw new Exception("The value of signal does not match specified interval!");
             }
             else
             {
-                //logger.LogNewInfo("Input sending signal directly to Modul2.");
+                logger.LogNewInfo(String.Format("Input sending signal directly to Modul2 with values {0} - {1}.", (SignalCode)signal, value));
                 historyWritingProxy.WriteToHistory((SignalCode)signal, value);
             }
         }
