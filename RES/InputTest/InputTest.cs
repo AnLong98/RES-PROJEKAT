@@ -14,14 +14,21 @@ namespace InputTest
     public class InputTest
     {
 
-        ILogging log;
-        IModule2DirectUpdate historyProxy;
-        IModule1 modul1Proxy;
+        private ILogging mockedLogger;
+        private IModule2DirectUpdate mockedHistoryProxy;
+        private IModule1 mockedModul1Proxy;
 
         [SetUp]
         public void SetUp()
         {
+            Mock<ILogging> log = new Mock<ILogging>();
+            mockedLogger = log.Object;
 
+            Mock<IModule2DirectUpdate> historyProxy = new Mock<IModule2DirectUpdate>();
+            mockedHistoryProxy = historyProxy.Object;
+
+            Mock<IModule1> modul1Proxy = new Mock<IModule1>();
+            mockedModul1Proxy = modul1Proxy.Object;
         }
 
         [Test]
@@ -30,12 +37,8 @@ namespace InputTest
         [TestCase(7, 999.0)]
         public void sendSignal_GoodParameters_DoesNotThrow(int signal, double value)
         {
-            Mock<ILogging> log = new Mock<ILogging>();
 
-            Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
-            Mock<IModule1> modul1 = new Mock<IModule1>();
-
-            Input input = new Input(log.Object, histprox.Object, modul1.Object);
+            Input input = new Input(mockedLogger, mockedHistoryProxy, mockedModul1Proxy);
 
             Assert.DoesNotThrow(() => input.sendSignal(signal, value));
             
@@ -49,38 +52,27 @@ namespace InputTest
         [TestCase(-2, -2.0)]
         public void sendSignal_BadParameters_DoesThrow(int signal, double value)
         {
-            Mock<ILogging> log = new Mock<ILogging>();
 
-            Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
-            Mock<IModule1> modul1 = new Mock<IModule1>();
-
-            Input input = new Input(log.Object, histprox.Object, modul1.Object);
+            Input input = new Input(mockedLogger, mockedHistoryProxy, mockedModul1Proxy);
 
             Assert.Throws<Exception>(() => input.sendSignal(signal, value));
 
         }
         
-        //THIS IS THE METHOD I NEED HELP WITH
+
         [Test]
         public void StartDataFlow_CallingMethod_AreEqual()
         {
-            Mock<ILogging> log = new Mock<ILogging>();
+            Mock<IModule1> mod1 = new Mock<IModule1>();
 
-            Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
-            Mock<IModule1> modul1Mock = new Mock<IModule1>();
-
-            Input input = new Input(log.Object, histprox.Object, modul1Mock.Object);
+            Input input = new Input(mockedLogger, mockedHistoryProxy, mod1.Object);
 
             input.StartDataFlow();
             Thread.Sleep(9000);
             input.StopDataFlow();
 
-            modul1Mock.Verify(modul1 => modul1.UpdateDataset(Is.))
-            //Razmisljam kako ovde uporediti koliko puta se pozvala.
-            //Krenuo sam sa onim modul1Mock.Setup(modul1 => modul1.UpdateDataSet()).Verifiable();
-            // ovde sam zapeo kako proslediti parametre u UPDATEDATASET i nmg se raskontati.
+            mod1.Verify(modul1 => modul1.UpdateDataset(It.IsAny<double>(), It.IsAny<SignalCode>()), Times.Exactly(3));
 
         }
-        */
     }
 }
