@@ -11,7 +11,13 @@ namespace InputTest
     public class InputTest
     {
         [Test]
-        [TestCase()]
+        [TestCase(0, 10)]
+        [TestCase(2, 319)]
+        [TestCase(7, 999)]
+        public void sendSignalTest()
+        {
+
+        }
 
     }
 }
