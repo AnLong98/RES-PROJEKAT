@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using InputNS;
 
 namespace InputTest
 {
@@ -23,7 +24,7 @@ namespace InputTest
             Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
             Mock<IModule1> modul1 = new Mock<IModule1>();
 
-            Input.Input input = new Input.Input(log.Object, histprox.Object, modul1.Object);
+            Input input = new Input(log.Object, histprox.Object, modul1.Object);
 
             Assert.DoesNotThrow(() => input.sendSignal(signal, value));
             
@@ -42,14 +43,14 @@ namespace InputTest
             Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
             Mock<IModule1> modul1 = new Mock<IModule1>();
 
-            Input.Input input = new Input.Input(log.Object, histprox.Object, modul1.Object);
+            Input input = new Input(log.Object, histprox.Object, modul1.Object);
 
             Assert.Throws<Exception>(() => input.sendSignal(signal, value));
 
         }
         
         //THIS IS THE METHOD I NEED HELP WITH
-       /* [Test]
+        [Test]
         public void StartDataFlow_CallingMethod_AreEqual()
         {
             Mock<ILogging> log = new Mock<ILogging>();
@@ -57,12 +58,13 @@ namespace InputTest
             Mock<IModule2DirectUpdate> histprox = new Mock<IModule2DirectUpdate>();
             Mock<IModule1> modul1Mock = new Mock<IModule1>();
 
-            Input.Input input = new Input.Input(log.Object, histprox.Object, modul1Mock.Object);
+            Input input = new Input(log.Object, histprox.Object, modul1Mock.Object);
 
             input.StartDataFlow();
             Thread.Sleep(9000);
             input.StopDataFlow();
 
+            modul1Mock.Verify(modul1 => modul1.UpdateDataset(Is.))
             //Razmisljam kako ovde uporediti koliko puta se pozvala.
             //Krenuo sam sa onim modul1Mock.Setup(modul1 => modul1.UpdateDataSet()).Verifiable();
             // ovde sam zapeo kako proslediti parametre u UPDATEDATASET i nmg se raskontati.

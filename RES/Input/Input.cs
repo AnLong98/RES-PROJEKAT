@@ -14,7 +14,7 @@ using Common;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Input
+namespace InputNS
 {
     public class Input : IInput
     {
