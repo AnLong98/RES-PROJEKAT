@@ -21,23 +21,18 @@ namespace Modul1
         private double module1Value;
 
 
-
-        ~Module1Property()
-        {
-
-        }
-
         public Module1Property()
         {
 
         }
 
         /// 
-        /// <param name="code"></param>
-        /// <param name="value"></param>
+        /// <param name="code">Signal code</param>
+        /// <param name="value">Signal value</param>
         public Module1Property(SignalCode code, double value)
         {
-
+            this.Code = code;
+            this.Module1Value = value;
         }
 
         public SignalCode Code

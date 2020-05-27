@@ -20,30 +20,19 @@ namespace Modul1
 
         private ILogging logger;
 
-        public Module1DataAdapter()
-        {
-
-        }
-
-        ~Module1DataAdapter()
-        {
-
-        }
-
-        /// 
-        /// <param name="logger"></param>
         public Module1DataAdapter(ILogging logger)
         {
-
+            this.logger = logger;
         }
 
-        /// 
-        /// <param name="signal"></param>
-        /// <param name="value"></param>
-        public Module1Property PackToModule1Property(SignalCode signal, double value)
-        {
 
-            return null;
+        /// 
+        /// <param name="signal">Signal code</param>
+        /// <param name="value">Signal value</param>
+        public IModule1Property PackToModule1Property(SignalCode signal, double value)
+        {
+            logger.LogNewInfo(string.Format("Packing signal {0} and value {1} to module 1 property", signal.ToString(), value));
+            return new Module1Property(signal, value);
         }
 
     }//end Module1DataAdapter

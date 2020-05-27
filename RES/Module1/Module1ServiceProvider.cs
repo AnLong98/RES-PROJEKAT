@@ -34,7 +34,7 @@ namespace Modul1
         }
 
         /// 
-        /// <param name="logger"></param>
+        /// <param name="logger">Logger</param>
         /// <param name="module2Proxy"></param>
         public Module1ServiceProvider(ILogging logger, IModule2Update module2Proxy)
         {

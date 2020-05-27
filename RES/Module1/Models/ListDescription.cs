@@ -15,15 +15,16 @@ namespace Modul1
 {
 
 
-
-
-
     public class ListDescription : IListDescription
     {
 
         public List<Description> descriptions;
 
-
+        List<IDescription> Descriptions
+        { get => throw new NotImplementedException();
+          set => throw new NotImplementedException();
+        }
+        List<IDescription> IListDescription.Descriptions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         ~ListDescription()
         {
@@ -42,11 +43,6 @@ namespace Modul1
 
         }
 
-        public IDescription Descriptions()
-        {
-
-            return null;
-        }
 
         /// 
         /// <param name="dataset"></param>
