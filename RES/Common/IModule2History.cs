@@ -23,6 +23,4 @@ public interface IModule2History  {
     /// <param name="code"></param>
     List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate, SignalCode code);
 
-    [OperationContract]
-    bool Ping();
 }//end IModule2History

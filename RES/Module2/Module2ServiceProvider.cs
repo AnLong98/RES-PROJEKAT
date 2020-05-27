@@ -15,7 +15,7 @@ using System.ServiceModel;
 
 namespace Module2
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+
     public class Module2ServiceProvider : IModule2Update, IModule2History, IModule2DirectUpdate
     {
 
@@ -131,14 +131,7 @@ namespace Module2
             databaseManager.WriteProperty(property);
         }
 
-        /// <summary>
-        /// Returns true if server is alive, used for connection testing
-        /// </summary>
-        public bool Ping()
-        {
-            logger.LogNewInfo("Server pinged.");
-            return true;
-        }
+        
     }
 
 }//end Module2ServiceProvider

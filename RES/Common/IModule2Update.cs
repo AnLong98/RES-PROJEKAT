@@ -20,6 +20,5 @@ public interface IModule2Update  {
 	/// <param name="property"></param>
 	bool UpdateDatabase(IListDescription property);
 
-    [OperationContract]
-    bool Ping();
+
 }//end IModule2Update

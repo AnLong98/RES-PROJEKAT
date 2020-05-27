@@ -98,8 +98,6 @@
     <Compile Include="ManagersTest\Module2DatabaseManagerTest.cs" />
     <Compile Include="ModelsTest\CollectionDescriptionTest.cs" />
     <Compile Include="ModelsTest\HistoricalCollectionTest.cs" />
-    <Compile Include="ModelsTest\Module2PropertyTest.cs" />
-    <Compile Include="Module2ServerTest.cs" />
     <Compile Include="Module2ServiceProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoriesTest\DatabaseTableNamesRepositoryTest.cs" />

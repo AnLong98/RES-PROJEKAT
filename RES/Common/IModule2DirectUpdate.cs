@@ -21,6 +21,5 @@ public interface IModule2DirectUpdate  {
 	/// <param name="value"></param>
 	void WriteToHistory(SignalCode code, double value);
 
-    [OperationContract]
-    bool Ping();
+
 }//end IModule2DirectUpdate

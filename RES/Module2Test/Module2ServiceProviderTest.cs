@@ -41,8 +41,8 @@ namespace Module2Test
         [TestCase(100, 97.9, 2, Result = true)]
         public bool IsDeadbandSatisfied_SatisfiedEgdeCases_ReturnsTrue(double oldValue, double newValue, double percentageDeadband)
         {
-            Module2Property oldProperty = new Module2Property(SignalCode.CODE_ANALOG, oldValue);
-            Module2Property newProperty = new Module2Property(SignalCode.CODE_ANALOG, newValue);
+            IModule2Property oldProperty = MockModule2Property(SignalCode.CODE_ANALOG, oldValue);
+            IModule2Property newProperty = MockModule2Property(SignalCode.CODE_ANALOG, newValue);
 
             return providerPartialyMocked.IsDeadbandSatisfied(oldProperty, newProperty, percentageDeadband);
 
@@ -57,8 +57,8 @@ namespace Module2Test
         [TestCase(100, 98.1, 2, Result = false)]
         public bool IsDeadbandSatisfied_NotSatisfiedEgdeCases_ReturnsFalse(double oldValue, double newValue, double percentageDeadband)
         {
-            Module2Property oldProperty = new Module2Property(SignalCode.CODE_ANALOG, oldValue);
-            Module2Property newProperty = new Module2Property(SignalCode.CODE_ANALOG, newValue);
+            IModule2Property oldProperty = MockModule2Property(SignalCode.CODE_ANALOG, oldValue);
+            IModule2Property newProperty = MockModule2Property(SignalCode.CODE_ANALOG, newValue);
 
             return providerPartialyMocked.IsDeadbandSatisfied(oldProperty, newProperty, percentageDeadband);
 
@@ -123,6 +123,15 @@ namespace Module2Test
             mockAdapter.Verify(x => x.RepackToCollectionDescriptionArray(mockList.Object), Times.Exactly(1));
         }
 
+
+
+        private IModule2Property MockModule2Property(SignalCode signal, double value)
+        {
+            Mock<IModule2Property> module2Property = new Mock<IModule2Property>();
+            module2Property.SetupGet<SignalCode>(x => x.Code).Returns(signal);
+            module2Property.SetupGet<double>(x => x.Value).Returns(value);
+            return module2Property.Object;
+        }
 
 
     }

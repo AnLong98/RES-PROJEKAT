@@ -177,7 +177,6 @@
     <Compile Include="Adapters\Module2DataAdapter.cs" />
     <Compile Include="Models\Module2Property.cs" />
     <Compile Include="Managers\Module2DatabaseManager.cs" />
-    <Compile Include="Module2Server.cs" />
     <Compile Include="Module2ServiceProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

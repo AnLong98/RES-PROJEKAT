@@ -26,6 +26,7 @@ namespace Module2Test.ManagersTest
         {
             loggingMock = new Mock<ILogging>();
         }
+        /*This code is not supposed to be here, testing database with unit tests is apparently forbidden. Check this again!!*/
 
         [TearDown]
         public void CleanTestDatabase()
