@@ -59,10 +59,12 @@
   <ItemGroup>
     <Compile Include="AdaptersTest\Module1DataAdapterTest.cs" />
     <Compile Include="ModelsTest\DescriptionTest.cs" />
+    <Compile Include="ModelsTest\ListDescriptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

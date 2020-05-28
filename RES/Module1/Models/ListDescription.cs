@@ -28,6 +28,13 @@ namespace Modul1
             descriptions = new List<IDescription>();
         }
 
+
+        public ListDescription(ILogging logger, List<IDescription> descriptions)
+        {
+            this.logger = logger;
+            this.descriptions = descriptions;
+        }
+
         /// 
         /// <param name="description">Module 1 description</param>
         public void AddOrReplaceDescription(IDescription description)
