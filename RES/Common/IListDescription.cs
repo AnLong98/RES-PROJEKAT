@@ -21,7 +21,6 @@ public interface IListDescription  {
 
 	List<IDescription> Descriptions{
 		get;
-		set;
 	}
 
 	/// 
@@ -36,7 +35,4 @@ public interface IListDescription  {
 	/// <param name="dataset"></param>
 	bool IsDatasetFull(Dataset dataset);
 
-	/// 
-	/// <param name="property"></param>
-	void UpdateProperty(IModule1Property property);
 }//end IListDescription

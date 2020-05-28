@@ -134,6 +134,27 @@ namespace Module1Test.ModelsTest
         }
 
 
+        [Test]
+        [TestCase(19, Result=100)]
+        [TestCase(199, Result = 1000)]
+        [TestCase(1999, Result = 10000)]
+        public int CreateUniqueID_EdgeCases_IDIntegritySecured(int staticID)
+        {
+            return Description.CreateUniqueID(staticID);
+        }
+
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(9)]
+        [TestCase(-1)]
+        public void CreateUniqueID_StaticIDBelow10_ThrowsException(int staticID)
+        {
+            Assert.Throws<ArgumentException>(() => Description.CreateUniqueID(staticID));
+        }
+
+
+        /*Helper methods*/
         public IModule1Property MockModule1Property(SignalCode code, double value)
         {
             Mock<IModule1Property> mockedProperty = new Mock<IModule1Property>();

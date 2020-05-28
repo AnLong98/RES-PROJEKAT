@@ -18,62 +18,74 @@ namespace Modul1
     public class ListDescription : IListDescription
     {
 
-        public List<Description> descriptions;
+        private List<IDescription> descriptions;
+        private ILogging logger;
 
-        List<IDescription> Descriptions
-        { get => throw new NotImplementedException();
-          set => throw new NotImplementedException();
-        }
-        List<IDescription> IListDescription.Descriptions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        ~ListDescription()
+        public ListDescription(ILogging logger)
         {
-
-        }
-
-        public ListDescription()
-        {
-
+            this.logger = logger;
+            descriptions = new List<IDescription>();
         }
 
         /// 
-        /// <param name="description"></param>
+        /// <param name="description">Module 1 description</param>
         public void AddOrReplaceDescription(IDescription description)
         {
+            if (DoesDescriptionExist(description.Dataset))
+            {
+                descriptions.RemoveAll(x => x.Dataset == description.Dataset);
+            }
 
+            descriptions.Add(description);
         }
 
 
         /// 
-        /// <param name="dataset"></param>
+        /// <param name="dataset">Dataset for description</param>
         public bool DoesDescriptionExist(Dataset dataset)
         {
+
+            foreach(IDescription description in descriptions)
+            {
+                if (description.Dataset == dataset) return true;
+            }
 
             return false;
         }
 
         /// 
-        /// <param name="datset"></param>
-        public IDescription GetDescriptionByDataset(Dataset datset)
+        /// <param name="dataset">Dataset for description</param>
+        public IDescription GetDescriptionByDataset(Dataset dataset)
         {
+
+            foreach(IDescription description in descriptions)
+            {
+                if (description.Dataset == dataset) return description;
+            }
 
             return null;
         }
 
         /// 
-        /// <param name="dataset"></param>
+        /// <param name="dataset">Dataset for description</param>
         public bool IsDatasetFull(Dataset dataset)
         {
 
-            return false;
+            if (!DoesDescriptionExist(dataset)) return false;
+
+            List<IModule1Property> properties = GetDescriptionByDataset(dataset).Properties;
+            if (properties.Count < 2) return false;
+
+            return true;
         }
 
-        /// 
-        /// <param name="property"></param>
-        public void UpdateProperty(IModule1Property property)
-        {
+        public List<IDescription> Descriptions {
+            get
+            {
+                return descriptions;
+            }
 
         }
-
     }//end ListDescription
 }

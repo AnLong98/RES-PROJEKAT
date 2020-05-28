@@ -30,7 +30,8 @@ namespace Modul1
             this.dataset = dataset;
             this.logger = logger;
             propertyList = new List<IModule1Property>();
-            this.id = createUniqueID(staticID);
+            this.id = CreateUniqueID(staticID);
+            staticID = id;
         }
 
         /// 
@@ -46,22 +47,30 @@ namespace Modul1
             Properties.Add(property);
         }
 
-        public static int createUniqueID(int statidID)
+        public static int CreateUniqueID(int staticID)
         {
 
-            return 0;
+            if (staticID < 10) throw new ArgumentException("static id should be double digit value at least");
+
+            int newId = staticID + 1;
+            int firstNumber = int.Parse(staticID.ToString().Substring(0, 1));
+            string newIDString = newId.ToString();
+
+
+            if (int.Parse(newIDString.Substring(0, 1)) == firstNumber + 1)//Should add another zero and decrement first number
+            {
+                newIDString = firstNumber.ToString() + newIDString.Substring(1);
+                newIDString += '0';
+                newId = int.Parse(newIDString);
+            }
+
+            return newId;
         }
 
-        public Dataset Dataset
+        public static void ResetStaticID()
         {
-            get
-            {
-                return dataset;
-            }
-            set
-            {
-                dataset = value;
-            }
+
+            staticID = 10;
         }
 
         /// 
@@ -82,6 +91,8 @@ namespace Modul1
             return false;
         }
 
+        
+        /*Getters and setters*/
         /// 
         /// <param name="code">Signal code for property</param>
         public IModule1Property GetPropertyByCode(SignalCode code)
@@ -113,6 +124,19 @@ namespace Modul1
         {
             get { return propertyList; }
             set { propertyList = value; }
+        }
+
+
+        public Dataset Dataset
+        {
+            get
+            {
+                return dataset;
+            }
+            set
+            {
+                dataset = value;
+            }
         }
 
     }//end Description
