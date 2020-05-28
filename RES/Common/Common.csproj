@@ -52,6 +52,7 @@
     <Compile Include="IListDescription.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="IModule1.cs" />
+    <Compile Include="IModule1DatabaseManagement.cs" />
     <Compile Include="IModule1Property.cs" />
     <Compile Include="IModule2DirectUpdate.cs" />
     <Compile Include="IModule2History.cs" />

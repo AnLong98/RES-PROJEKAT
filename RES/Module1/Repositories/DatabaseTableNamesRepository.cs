@@ -8,9 +8,26 @@ namespace Module1.Repositories
 {
     public static class DatabaseTableNamesRepository
     {
-        internal static string GetTableNameByDataset(Dataset set)
+        public static string GetTableNameByDataset(Dataset set)
         {
-            return "";
+            switch (set)
+            {
+                case Dataset.SET1:
+                    return "res_module1_dataset1";
+
+                case Dataset.SET2:
+                    return "res_module1_dataset2";
+
+                case Dataset.SET3:
+                    return "res_module1_dataset3";
+
+                case Dataset.SET4:
+                    return "res_module1_dataset4";
+
+                default:
+                    return "Not found";
+            }
+
         }
     }
 }

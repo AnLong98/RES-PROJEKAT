@@ -17,7 +17,7 @@ namespace Modul1
 {
 
 
-    public class Module1DatabaseManager
+    public class Module1DatabaseManager : IModule1DatabaseManagement
     {
 
         private ILogging logger;
@@ -48,11 +48,12 @@ namespace Modul1
 
             string signalCode = property.Code.ToString();
             double value = property.Module1Value;
-            string query = @"REPLACE INTO " + tableName + "(signalCode, signalValue) VALUES (@code, @value)";
+            string query = @"DELETE FROM " + tableName + " WHERE signalCode=@codeToDelete; INSERT INTO " + tableName + " (signalCode, signalValue) VALUES(@codeToInsert, @value)";
 
             using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
             {
-                command.Parameters.AddWithValue("@code", signalCode);
+                command.Parameters.AddWithValue("@codeToDelete", signalCode);
+                command.Parameters.AddWithValue("@codeToInsert", signalCode);
                 command.Parameters.AddWithValue("@value", value);
 
                 if (command.ExecuteNonQuery() == 0)
