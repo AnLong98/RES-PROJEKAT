@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Data.SQLite;
+using Module1.Repositories;
 
 namespace Modul1
 {
@@ -21,13 +22,18 @@ namespace Modul1
 
         private ILogging logger;
         private SQLiteConnection databaseConnection;
+        private readonly string databaseName;
 
         /// 
         /// <param name="logger">Logger</param>
-        public Module1DatabaseManager(ILogging logger, string databasePath)
+        public Module1DatabaseManager(ILogging logger, string databaseName)
         {
             this.logger = logger;
-            databaseConnection = new SQLiteConnection();
+            this.databaseName = databaseName;
+
+            if (!File.Exists(databaseName)) throw new Exception("Database does not exist");
+            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES";
+            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0}\{1};New=False;", path, databaseName));
             databaseConnection.Open();
         }
 
@@ -37,6 +43,27 @@ namespace Modul1
         {
 
             logger.LogNewInfo(string.Format("Trying to write property with signal code {0} and value {1} to database", property.Code, property.Module1Value));
+            Dataset set = DatasetRepository.GetDataset(property.Code);
+            string tableName = DatabaseTableNamesRepository.GetTableNameByDataset(set);
+
+            string signalCode = property.Code.ToString();
+            double value = property.Module1Value;
+            string query = @"REPLACE INTO " + tableName + "(signalCode, signalValue) VALUES (@code, @value)";
+
+            using (SQLiteCommand command = new SQLiteCommand(query, databaseConnection))
+            {
+                command.Parameters.AddWithValue("@code", signalCode);
+                command.Parameters.AddWithValue("@value", value);
+
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    logger.LogNewWarning("Could not write to database.");
+                }
+                else
+                {
+                    logger.LogNewInfo("Property written successfully.");
+                }
+            }
         }
 
     }//end Module1DatabaseManager

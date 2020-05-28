@@ -84,6 +84,7 @@
     <Compile Include="Models\Module1Property.cs" />
     <Compile Include="Module1ServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DatabaseTableNamesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
