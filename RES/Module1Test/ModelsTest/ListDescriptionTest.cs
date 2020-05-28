@@ -140,6 +140,45 @@ namespace Module1Test.ModelsTest
 
         }
 
+        [Test]
+        public void AddOrReplaceProperty_ExistingDescription_VerifyAddPropertyCalled()
+        {
+            Mock<IDescription> description = new Mock<IDescription>();
+            description.SetupGet(x => x.Dataset).Returns(Dataset.SET1);
+            List<IDescription> descriptions = new List<IDescription>();
+            descriptions.Add(description.Object);
+
+            IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
+
+            IModule1Property newProperty = MockModule1Property(SignalCode.CODE_ANALOG, 120);
+            listDescription.AddOrReplaceProperty(newProperty);
+
+            description.Verify(x => x.AddOrReplaceProperty(newProperty), Times.Exactly(1));
+
+        }
+
+
+        [Test]
+        public void AddOrReplaceProperty_NonExistingDescription_PropertyAdded()
+        {
+            List<IDescription> descriptions = new List<IDescription>();
+
+
+            IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
+
+            Assert.AreEqual(listDescription.Descriptions.Count, 0);
+
+            IModule1Property newProperty = MockModule1Property(SignalCode.CODE_ANALOG, 120);
+            listDescription.AddOrReplaceProperty(newProperty);
+
+            Assert.AreEqual(listDescription.Descriptions.Count, 1);
+            Assert.AreEqual(listDescription.Descriptions[0].Dataset, Dataset.SET1);
+            Assert.AreEqual(listDescription.Descriptions[0].Properties.Count, 1);
+            Assert.AreEqual(listDescription.Descriptions[0].Properties[0].Code, SignalCode.CODE_ANALOG);
+            Assert.AreEqual(listDescription.Descriptions[0].Properties[0].Module1Value, 120);
+
+        }
+
 
 
 

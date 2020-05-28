@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Common;
 
 namespace Modul1
 {
@@ -19,35 +20,39 @@ namespace Modul1
 
         private ILogging logging;
         private IModule2Update module2Proxy;
-        private Module1DataAdapter dataAdapter;
-        private ListDescription listDescription;
-        private Module1DatabaseManager databaseManager;
+        private IModule1DataAdapting dataAdapter;
+        private IListDescription listDescription;
+        private IModule1DatabaseManagement databaseManager;
 
-        public Module1ServiceProvider()
+        public Module1ServiceProvider(ILogging logging, IModule2Update module2Proxy, IModule1DataAdapting dataAdapter, IListDescription listDescription, IModule1DatabaseManagement databaseManager)
         {
-
-        }
-
-        ~Module1ServiceProvider()
-        {
-
-        }
-
-        /// 
-        /// <param name="logger">Logger</param>
-        /// <param name="module2Proxy"></param>
-        public Module1ServiceProvider(ILogging logger, IModule2Update module2Proxy)
-        {
-
+            this.logging = logging;
+            this.module2Proxy = module2Proxy;
+            this.dataAdapter = dataAdapter;
+            this.listDescription = listDescription;
+            this.databaseManager = databaseManager;
         }
 
         /// 
-        /// <param name="value"></param>
-        /// <param name="signalCode"></param>
+        /// <param name="value">Signal value</param>
+        /// <param name="signalCode">Code for given signal</param>
         public bool UpdateDataset(double value, SignalCode signalCode)
         {
+            logging.LogNewInfo(string.Format("Update dataset called for signal {0} and value {1}", signalCode, value));
+            Dataset dataset = DatasetRepository.GetDataset(signalCode);
+            IModule1Property property = dataAdapter.PackToModule1Property(signalCode, value);
+            listDescription.AddOrReplaceProperty(property);
 
-            return false;
+            if(listDescription.IsDatasetFull(dataset))
+            {
+                logging.LogNewInfo(string.Format("Dataset {0} is full, sending the whole list to module 2", dataset.ToString()));
+                module2Proxy.UpdateDatabase(listDescription);
+            }
+
+
+            logging.LogNewInfo("Calling database manager to write new property..");
+            databaseManager.WriteProperty(property);
+            return true;
         }
 
 

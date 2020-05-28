@@ -10,12 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Common;
 
 namespace Modul1
 {
 
 
-    public class Module1DataAdapter
+    public class Module1DataAdapter : IModule1DataAdapting
     {
 
         private ILogging logger;

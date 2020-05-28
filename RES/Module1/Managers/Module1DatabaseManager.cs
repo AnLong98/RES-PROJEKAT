@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.Data.SQLite;
 using Module1.Repositories;
+using Common;
 
 namespace Modul1
 {
@@ -30,10 +31,10 @@ namespace Modul1
         {
             this.logger = logger;
             this.databaseName = databaseName;
-
-            if (!File.Exists(databaseName)) throw new Exception("Database does not exist");
-            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES";
-            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0}\{1};New=False;", path, databaseName));
+            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\" + databaseName;
+            if (!File.Exists(path)) throw new Exception("Database does not exist");
+            
+            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0};New=False;", path));
             databaseConnection.Open();
         }
 

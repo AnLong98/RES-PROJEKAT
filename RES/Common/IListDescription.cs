@@ -35,4 +35,6 @@ public interface IListDescription  {
 	/// <param name="dataset"></param>
 	bool IsDatasetFull(Dataset dataset);
 
+    void AddOrReplaceProperty(IModule1Property property);
+
 }//end IListDescription

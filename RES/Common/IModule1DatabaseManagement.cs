@@ -1,4 +1,4 @@
-﻿namespace Modul1
+﻿namespace Common
 {
     public interface IModule1DatabaseManagement
     {

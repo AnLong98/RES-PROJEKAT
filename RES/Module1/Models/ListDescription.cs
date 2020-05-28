@@ -87,6 +87,25 @@ namespace Modul1
             return true;
         }
 
+        public void AddOrReplaceProperty(IModule1Property property)
+        {
+            logger.LogNewInfo("Trying to replace property in list description.");
+            Dataset dataset = DatasetRepository.GetDataset(property.Code);
+            IDescription description;
+
+            if(DoesDescriptionExist(dataset))
+            {
+                description = GetDescriptionByDataset(dataset);
+            }
+            else
+            {
+                description = new Description(dataset,logger);
+            }
+
+            description.AddOrReplaceProperty(property);
+            AddOrReplaceDescription(description);
+        }
+
         public List<IDescription> Descriptions {
             get
             {
