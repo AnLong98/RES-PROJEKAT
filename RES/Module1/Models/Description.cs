@@ -23,16 +23,6 @@ namespace Modul1
         private ILogging logger;
         private List<IModule1Property> propertyList;
 
-        public Description()
-        {
-
-        }
-
-        ~Description()
-        {
-
-        }
-
         /// 
         /// <param name="dataset">Dataset</param>
         public Description(Dataset dataset, ILogging logger)
@@ -40,6 +30,7 @@ namespace Modul1
             this.dataset = dataset;
             this.logger = logger;
             propertyList = new List<IModule1Property>();
+            this.id = createUniqueID(staticID);
         }
 
         /// 
@@ -55,7 +46,7 @@ namespace Modul1
             Properties.Add(property);
         }
 
-        private int createUniqueID()
+        public static int createUniqueID(int statidID)
         {
 
             return 0;

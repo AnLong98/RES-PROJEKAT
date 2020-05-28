@@ -85,6 +85,55 @@ namespace Module1Test.ModelsTest
         }
 
 
+        [Test]
+        [TestCase(Dataset.SET1, SignalCode.CODE_ANALOG, 200)]
+        public void AddOrReplaceProperty_ExistingProperty_PropertyReplaced(Dataset dataset, SignalCode signal, double value)
+        {
+            IModule1Property existingProperty = MockModule1Property(signal, 100);
+            IModule1Property newProperty = MockModule1Property(signal, value);
+            Mock<List<IModule1Property>> mockedList = new Mock<List<IModule1Property>>();
+
+            List<IModule1Property> properties = mockedList.Object;
+            properties.Add(existingProperty);
+            Description description = new Description(dataset, mockedLogger);
+            description.Properties = properties;
+
+            IModule1Property propertyInside = description.Properties[0];
+
+            Assert.AreEqual(existingProperty.Code, propertyInside.Code);
+            Assert.AreEqual(existingProperty.Module1Value, propertyInside.Module1Value);
+
+            description.AddOrReplaceProperty(newProperty);
+
+            propertyInside = description.Properties[0];
+
+            Assert.AreEqual(newProperty.Code, propertyInside.Code);
+            Assert.AreEqual(newProperty.Module1Value, propertyInside.Module1Value);
+        }
+
+
+        [Test]
+        [TestCase(Dataset.SET1, SignalCode.CODE_ANALOG, 200)]
+        public void AddOrReplaceProperty_NonExistingProperty_PropertyAddedReplaced(Dataset dataset, SignalCode signal, double value)
+        {
+            IModule1Property newProperty = MockModule1Property(signal, value);
+            Mock<List<IModule1Property>> mockedList = new Mock<List<IModule1Property>>();
+
+            List<IModule1Property> properties = mockedList.Object;
+            Assert.IsEmpty(properties);
+
+            Description description = new Description(dataset, mockedLogger);
+            description.Properties = properties;
+
+            description.AddOrReplaceProperty(newProperty);
+
+            IModule1Property propertyInside = description.Properties[0];
+
+            Assert.AreEqual(newProperty.Code, propertyInside.Code);
+            Assert.AreEqual(newProperty.Module1Value, propertyInside.Module1Value);
+        }
+
+
         public IModule1Property MockModule1Property(SignalCode code, double value)
         {
             Mock<IModule1Property> mockedProperty = new Mock<IModule1Property>();
