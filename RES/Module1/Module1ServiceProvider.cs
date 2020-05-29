@@ -23,6 +23,7 @@ namespace Modul1
         private IModule1DataAdapting dataAdapter;
         private IListDescription listDescription;
         private IModule1DatabaseManagement databaseManager;
+        private readonly string databaseName = "res_module1.db";
 
         public Module1ServiceProvider(ILogging logging, IModule2Update module2Proxy, IModule1DataAdapting dataAdapter, IListDescription listDescription, IModule1DatabaseManagement databaseManager)
         {
@@ -31,6 +32,15 @@ namespace Modul1
             this.dataAdapter = dataAdapter;
             this.listDescription = listDescription;
             this.databaseManager = databaseManager;
+        }
+
+        public Module1ServiceProvider(ILogging logging, IModule2Update module2Proxy)
+        {
+            this.logging = logging;
+            this.module2Proxy = module2Proxy;
+            this.dataAdapter = new Module1DataAdapter(logging);
+            this.listDescription = new ListDescription(logging);
+            this.databaseManager = new Module1DatabaseManager(logging, databaseName);
         }
 
         /// 
