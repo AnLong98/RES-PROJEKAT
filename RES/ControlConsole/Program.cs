@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace ControlConsole
 {
-    public interface IInput
+    class Program
     {
-        void SendSignal(int signal, double value);
-        
+        static void Main(string[] args)
+        {
+
+        }
     }
 }

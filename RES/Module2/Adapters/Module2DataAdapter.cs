@@ -49,7 +49,7 @@ namespace Module2 {
             List<IModule2Property> properties = new List<IModule2Property>();
             List<SignalCode> processedSignals = new List<SignalCode>();
 
-            foreach(IModule1Property property in description.Properties())
+            foreach(IModule1Property property in description.Properties)
             {
                 if(processedSignals.Contains(property.Code))
                 {

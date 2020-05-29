@@ -65,9 +65,11 @@ namespace Module2Test.AdaptersTest
         public void RepackToCollectionDescription_RegularParameters_AssertObjectContent
             (int id, Dataset dataset, SignalCode code1, double value1, SignalCode code2, double value2)
         {
-            List<IModule1Property> properties = new List<IModule1Property>();
-            properties.Add(MockModule1Property(code1, value1));
-            properties.Add(MockModule1Property(code2, value2));
+            List<IModule1Property> properties = new List<IModule1Property>
+            {
+                MockModule1Property(code1, value1),
+                MockModule1Property(code2, value2)
+            };
             IDescription description = MockDescription(id, dataset, properties);
 
             ICollectionDescription collectionDescription = adapter.RepackToCollectionDescription(description);
@@ -91,9 +93,11 @@ namespace Module2Test.AdaptersTest
         public void RepackToCollectionDescription_WrongDatasetForCode_ThrowsException
             (int id, Dataset dataset, SignalCode code1, double value1, SignalCode code2, double value2)
         {
-            List<IModule1Property> properties = new List<IModule1Property>();
-            properties.Add(MockModule1Property(code1, value1));
-            properties.Add(MockModule1Property(code2, value2));
+            List<IModule1Property> properties = new List<IModule1Property>
+            {
+                MockModule1Property(code1, value1),
+                MockModule1Property(code2, value2)
+            };
             IDescription description = MockDescription(id, dataset, properties);
 
             Assert.Throws<ArgumentException>(() => adapter.RepackToCollectionDescription(description));
@@ -107,9 +111,11 @@ namespace Module2Test.AdaptersTest
         public void RepackToCollectionDescription_TwoSameSignalsInDescription_ThrowsException
             (int id, Dataset dataset, SignalCode code1, double value1, SignalCode code2, double value2)
         {
-            List<IModule1Property> properties = new List<IModule1Property>();
-            properties.Add(MockModule1Property(code1, value1));
-            properties.Add(MockModule1Property(code2, value2));
+            List<IModule1Property> properties = new List<IModule1Property>
+            {
+                MockModule1Property(code1, value1),
+                MockModule1Property(code2, value2)
+            };
             IDescription description = MockDescription(id, dataset, properties);
 
             Assert.Throws<ArgumentException>(() => adapter.RepackToCollectionDescription(description));
@@ -146,7 +152,7 @@ namespace Module2Test.AdaptersTest
             Mock<IDescription> mockDescription = new Mock<IDescription>();
             mockDescription.SetupGet(x => x.Dataset).Returns(dataset);
             mockDescription.SetupGet(x => x.ID).Returns(id);
-            mockDescription.Setup(x => x.Properties()).Returns(properties);
+            mockDescription.Setup(x => x.Properties).Returns(properties);
 
             return mockDescription.Object;
         }
@@ -161,9 +167,11 @@ namespace Module2Test.AdaptersTest
 
             for (int i = 0; i < listLength; i++)
             {
-                List<IModule1Property> properties = new List<IModule1Property>();
-                properties.Add(MockModule1Property(SignalCode.CODE_ANALOG, 200));
-                properties.Add(MockModule1Property(SignalCode.CODE_DIGITAL, 100));
+                List<IModule1Property> properties = new List<IModule1Property>
+                {
+                    MockModule1Property(SignalCode.CODE_ANALOG, 200),
+                    MockModule1Property(SignalCode.CODE_DIGITAL, 100)
+                };
                 IDescription description = MockDescription(10, Dataset.SET1, properties);
                 descriptions.Add(description);
             }

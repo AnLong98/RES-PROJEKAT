@@ -1,4 +1,5 @@
-﻿using Modul1;
+﻿using Common;
+using Modul1;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -30,8 +31,10 @@ namespace Module1Test.ModelsTest
             List<IModule1Property> properties = mockedList.Object;
             properties.Add(module1Property);
 
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             Assert.IsTrue(description.DoesPropertyExist(signal));
         }
@@ -44,8 +47,10 @@ namespace Module1Test.ModelsTest
             Mock<List<IModule1Property>> mockedList = new Mock<List<IModule1Property>>();
             List<IModule1Property> properties = mockedList.Object;
 
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             Assert.IsFalse(description.DoesPropertyExist(signal));
         }
@@ -58,8 +63,10 @@ namespace Module1Test.ModelsTest
             Mock<List<IModule1Property>> mockedList = new Mock<List<IModule1Property>>();
             List<IModule1Property> properties = mockedList.Object;
 
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             Assert.IsNull(description.GetPropertyByCode(signal));
         }
@@ -75,8 +82,10 @@ namespace Module1Test.ModelsTest
             List<IModule1Property> properties = mockedList.Object;
             properties.Add(module1Property);
 
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             IModule1Property receivedProperty = description.GetPropertyByCode(signal);
 
@@ -95,8 +104,10 @@ namespace Module1Test.ModelsTest
 
             List<IModule1Property> properties = mockedList.Object;
             properties.Add(existingProperty);
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             IModule1Property propertyInside = description.Properties[0];
 
@@ -122,8 +133,10 @@ namespace Module1Test.ModelsTest
             List<IModule1Property> properties = mockedList.Object;
             Assert.IsEmpty(properties);
 
-            Description description = new Description(dataset, mockedLogger);
-            description.Properties = properties;
+            Description description = new Description(dataset, mockedLogger)
+            {
+                Properties = properties
+            };
 
             description.AddOrReplaceProperty(newProperty);
 

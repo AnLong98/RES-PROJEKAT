@@ -12,10 +12,8 @@ using System.Text;
 using System.IO;
 using System.ServiceModel;
 
-[ServiceContract]
 public interface IModule2Update  {
 
-    [OperationContract]
 	/// 
 	/// <param name="property"></param>
 	bool UpdateDatabase(IListDescription property);

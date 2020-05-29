@@ -1,4 +1,5 @@
-﻿using Modul1;
+﻿using Common;
+using Modul1;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -24,8 +25,10 @@ namespace Module1Test.ModelsTest
         public void IsDatasetFull_FullDataset_ReturnsTrue()
         {
             IDescription description = MockFullDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
 
@@ -38,8 +41,10 @@ namespace Module1Test.ModelsTest
         public void IsDatasetFull_NotFullDataset_ReturnsFalse()
         {
             IDescription description = MockEmptyDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
 
@@ -52,8 +57,10 @@ namespace Module1Test.ModelsTest
         public void DoesDescriptionExist_ExistingDescription_ReturnsTrue()
         {
             IDescription description = MockFullDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
 
@@ -78,8 +85,10 @@ namespace Module1Test.ModelsTest
         public void GetDescriptionByDataset_ExistingDescription_AssertContent()
         {
             IDescription description = MockFullDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
             Dataset dataset = Dataset.SET1;
@@ -93,8 +102,10 @@ namespace Module1Test.ModelsTest
         public void GetDescriptionByDataset_NonExistingDescription_ReturnsNull()
         {
             IDescription description = MockFullDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
             Dataset dataset = Dataset.SET2;
@@ -124,8 +135,10 @@ namespace Module1Test.ModelsTest
         public void AddOrReplaceDescription_ExistingDescription_DescriptionReplaced()
         {
             IDescription description = MockFullDataset1();
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
 
@@ -145,8 +158,10 @@ namespace Module1Test.ModelsTest
         {
             Mock<IDescription> description = new Mock<IDescription>();
             description.SetupGet(x => x.Dataset).Returns(Dataset.SET1);
-            List<IDescription> descriptions = new List<IDescription>();
-            descriptions.Add(description.Object);
+            List<IDescription> descriptions = new List<IDescription>
+            {
+                description.Object
+            };
 
             IListDescription listDescription = new ListDescription(mockedLogger, descriptions);
 
