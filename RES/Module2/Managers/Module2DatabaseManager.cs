@@ -36,10 +36,10 @@ namespace Module2
         {
             this.logger = logger;
             this.databaseName = databasePath;
-
-            if (!File.Exists(databaseName)) throw new Exception("Database does not exist");
-            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES"; 
-            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0}\{1};New=False;",path, databaseName));
+            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\"; 
+            if (!File.Exists(path + databaseName)) throw new Exception("Database does not exist");
+            
+            databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0}{1};New=False;",path, databaseName));
             databaseConnection.Open();
         }
 
