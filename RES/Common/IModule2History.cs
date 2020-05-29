@@ -17,11 +17,10 @@ public interface IModule2History  {
 
 
     [OperationContract]
-	/// 
-	/// <param name="startDate"></param>
-	/// <param name="endDate"></param>
-	List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate);
+    /// 
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <param name="code"></param>
+    List<IModule2Property> ReadHistory(DateTime startDate, DateTime endDate, SignalCode code);
 
-    [OperationContract]
-    bool Ping();
 }//end IModule2History
