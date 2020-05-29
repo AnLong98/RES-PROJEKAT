@@ -33,11 +33,10 @@ namespace LoggerTest
             loger.LogNewInfo(message);
 
             string log = File.ReadAllText(filename);
-            string expectedValue = string.Format("[INFO] {0}\r\n", message);
             string receivedValue = log;
 
             File.Delete(filename);
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.Contains(message));
             
 
         }
@@ -52,11 +51,10 @@ namespace LoggerTest
             loger.LogNewWarning(message);
 
             string log = File.ReadAllText(filename);
-            string expectedValue = string.Format("[WARNING] {0}\r\n", message);
             string receivedValue = log;
 
             File.Delete(filename);
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.Contains(message));
 
 
         }

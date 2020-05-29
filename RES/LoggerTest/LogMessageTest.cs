@@ -19,10 +19,10 @@ namespace LoggerTest
         {
             LogMessage log = new LogMessage(message);
 
-            string expectedValue = string.Format("[INFO] {0}", message);
+            string expectedValue = string.Format("[INFO]");
             string receivedValue = log.GetInfoMessage();
 
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.StartsWith(expectedValue));
         }
 
 
@@ -32,10 +32,10 @@ namespace LoggerTest
         {
             LogMessage log = new LogMessage(message);
 
-            string expectedValue = string.Format("[INFO] {0}", message);
+            string expectedValue = string.Format("[INFO]");
             string receivedValue = log.GetInfoMessage();
 
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.StartsWith(expectedValue));
         }
 
 
@@ -54,10 +54,10 @@ namespace LoggerTest
         {
             LogMessage log = new LogMessage(message);
 
-            string expectedValue = string.Format("[WARNING] {0}", message);
+            string expectedValue = string.Format("[WARNING]");
             string receivedValue = log.GetWarningMessage();
 
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.StartsWith(expectedValue));
         }
 
 
@@ -67,10 +67,10 @@ namespace LoggerTest
         {
             LogMessage log = new LogMessage(message);
 
-            string expectedValue = string.Format("[WARNING] {0}", message);
+            string expectedValue = string.Format("[WARNING]");
             string receivedValue = log.GetWarningMessage();
 
-            Assert.AreEqual(expectedValue, receivedValue);
+            Assert.IsTrue(receivedValue.StartsWith(expectedValue));
         }
 
 
