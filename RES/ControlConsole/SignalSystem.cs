@@ -53,7 +53,7 @@ namespace ControlConsole
         {
             WriteSignalMenu();
             int signalCode = GetSignalCode();
-            if (signalCode == 'q') return;
+            if (signalCode == -1) return;
             WriteValueMenu();
             double value = GetSignalValue();
             try
@@ -137,7 +137,7 @@ namespace ControlConsole
             Console.WriteLine("5 - Multiplenode");
             Console.WriteLine("6 - Consumer");
             Console.WriteLine("7 - Source");
-            Console.WriteLine("q - Exit");
+            Console.WriteLine("-1 - Exit");
         }
 
 
