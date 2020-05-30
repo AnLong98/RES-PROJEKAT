@@ -65,6 +65,19 @@ namespace Module2Test
 
         }
 
+        [Test]
+        [TestCase(100, 102.0, 2, Result = true)]
+        [TestCase(100, 100.0, 2, Result = true)]
+        public bool IsDeadbandSatisfied_CODEANALOG_ReturnsTrue(double oldValue, double newValue, double percentageDeadband)
+        {
+            IModule2Property oldProperty = MockModule2Property(SignalCode.CODE_DIGITAL, oldValue);
+            IModule2Property newProperty = MockModule2Property(SignalCode.CODE_DIGITAL, newValue);
+
+            return providerPartialyMocked.IsDeadbandSatisfied(oldProperty, newProperty, percentageDeadband);
+
+
+        }
+
 
         [Test]
         [TestCase(SignalCode.CODE_ANALOG, 200)]

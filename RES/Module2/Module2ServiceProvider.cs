@@ -52,7 +52,7 @@ namespace Module2
             double difference = Math.Abs(newValue.Value - oldValue.Value);
             double percentageDifference = (difference / oldValue.Value) * 100;
 
-            if (percentageDifference > deadbandPercentage)
+            if (percentageDifference > deadbandPercentage || oldValue.Code == SignalCode.CODE_DIGITAL)
             {
                 logger.LogNewInfo("Deadband satisfied");
                 return true;
