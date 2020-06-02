@@ -28,7 +28,7 @@ namespace ReaderNS
             this.module2proxy = modul2proxy;
         }
 
-        public string ReadFromModule2(string date1, string date2, int code)
+        public string ReadFromHistory(string beginDate, string endDate, int code)
         {
             string ret = "";
             DateTime firstDate, secondDate;
@@ -37,12 +37,12 @@ namespace ReaderNS
 
             logger.LogNewInfo("Reader is validating data.");
 
-            ValidateParameters(date1, date2, code);
+            ValidateParameters(beginDate, endDate, code);
 
             logger.LogNewInfo("Reader successfully validated data.");
 
-            firstDate = DateTime.Parse(date1);
-            secondDate = DateTime.Parse(date2);
+            firstDate = DateTime.Parse(beginDate);
+            secondDate = DateTime.Parse(endDate);
             sCode = (SignalCode)code;
 
             list = module2proxy.ReadHistory(firstDate, secondDate, sCode);
@@ -57,14 +57,14 @@ namespace ReaderNS
             return ret;
         }
 
-        public void ValidateParameters(string date1, string date2, int code)
+        public void ValidateParameters(string beginDate, string endDate, int code)
         {
-            if (!DateTime.TryParse(date1, out DateTime firstDate))
+            if (!DateTime.TryParse(beginDate, out DateTime firstDate))
             {
                 logger.LogNewWarning("Reader: Invalid value for startDate.");
                 throw new Exception("The first date value is not valid!");
             }
-            else if (!DateTime.TryParse(date2, out DateTime secondDate))
+            else if (!DateTime.TryParse(endDate, out DateTime secondDate))
             {
                 logger.LogNewWarning("Reader: Invalid value for endDate.");
                 throw new Exception("The second date value is not valid!");
