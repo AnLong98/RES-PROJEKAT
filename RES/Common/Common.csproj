@@ -61,6 +61,7 @@
     <Compile Include="IModule2History.cs" />
     <Compile Include="IModule2Property.cs" />
     <Compile Include="IModule2Update.cs" />
+    <Compile Include="IReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalCode.cs" />
   </ItemGroup>
