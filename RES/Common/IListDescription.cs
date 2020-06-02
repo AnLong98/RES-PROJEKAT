@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
+using System.ServiceModel;
 
 
 public interface IListDescription  {
@@ -21,7 +21,6 @@ public interface IListDescription  {
 
 	List<IDescription> Descriptions{
 		get;
-		set;
 	}
 
 	/// 
@@ -36,7 +35,6 @@ public interface IListDescription  {
 	/// <param name="dataset"></param>
 	bool IsDatasetFull(Dataset dataset);
 
-	/// 
-	/// <param name="property"></param>
-	void UpdateProperty(IModule1Property property);
+    void AddOrReplaceProperty(IModule1Property property);
+
 }//end IListDescription

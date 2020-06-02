@@ -12,15 +12,12 @@ using System.Text;
 using System.IO;
 using System.ServiceModel;
 
-[ServiceContract]
 public interface IModule2DirectUpdate  {
 
-    [OperationContract]
 	/// 
 	/// <param name="code"></param>
 	/// <param name="value"></param>
 	void WriteToHistory(SignalCode code, double value);
 
-    [OperationContract]
-    bool Ping();
+
 }//end IModule2DirectUpdate

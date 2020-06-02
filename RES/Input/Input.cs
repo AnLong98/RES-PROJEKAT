@@ -63,8 +63,10 @@ namespace InputNS
 
         public void StartDataFlow()
         {
-            t = new Thread(GenerateSignals);
-            t.IsBackground = true;
+            t = new Thread(GenerateSignals)
+            {
+                IsBackground = true
+            };
             t.Start();
         }
 
@@ -74,7 +76,7 @@ namespace InputNS
             t.Abort();
         }
 
-        public void sendSignal(int signal, double value)
+        public void SendSignal(int signal, double value)
         {
             if(value < 0)
             {
