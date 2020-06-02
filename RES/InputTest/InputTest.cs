@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using InputNS;
+using Common;
 
 namespace InputTest
 {
@@ -35,12 +36,12 @@ namespace InputTest
         [TestCase(0, 10.0)]
         [TestCase(2, 319.0)]
         [TestCase(7, 999.0)]
-        public void sendSignal_GoodParameters_DoesNotThrow(int signal, double value)
+        public void SendSignal_GoodParameters_DoesNotThrow(int signal, double value)
         {
 
             Input input = new Input(mockedLogger, mockedHistoryProxy, mockedModul1Proxy);
 
-            Assert.DoesNotThrow(() => input.sendSignal(signal, value));
+            Assert.DoesNotThrow(() => input.SendSignal(signal, value));
             
             
         }
@@ -50,12 +51,12 @@ namespace InputTest
         [TestCase(10, 231.0)]
         [TestCase(4, -213.0)]
         [TestCase(-2, -2.0)]
-        public void sendSignal_BadParameters_DoesThrow(int signal, double value)
+        public void SendSignal_BadParameters_DoesThrow(int signal, double value)
         {
 
             Input input = new Input(mockedLogger, mockedHistoryProxy, mockedModul1Proxy);
 
-            Assert.Throws<Exception>(() => input.sendSignal(signal, value));
+            Assert.Throws<Exception>(() => input.SendSignal(signal, value));
 
         }
         

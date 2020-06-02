@@ -27,12 +27,12 @@ namespace LoggerSpace
 
 	    public string GetInfoMessage(){
 
-            return string.Format("[INFO] {0}", message);
+            return string.Format("[INFO] [{0}] {1}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), message);
 	    }
 
 	    public string GetWarningMessage(){
 
-            return string.Format("[WARNING] {0}", message);
+            return string.Format("[WARNING] [{0}] {1}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), message);
         }
 
     }//end LogMessage

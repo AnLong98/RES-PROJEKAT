@@ -8,7 +8,7 @@ namespace Common
 {
     public interface IInput
     {
-        void sendSignal(int signal, double value);
+        void SendSignal(int signal, double value);
         
     }
 }

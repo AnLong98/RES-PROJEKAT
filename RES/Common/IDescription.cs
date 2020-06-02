@@ -37,9 +37,10 @@ public interface IDescription  {
 		set;
 	}
 
-	List<IModule1Property> Properties();
+	List<IModule1Property> Properties
+    {
+        get;
+        set;
+    }
 
-	/// 
-	/// <param name="property"></param>
-	void UpdateProperty(IModule1Property property);
 }//end IDescription
