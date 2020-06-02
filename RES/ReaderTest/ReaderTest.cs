@@ -4,6 +4,7 @@ using NUnit.Framework;
 using ReaderNS;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -56,19 +57,21 @@ namespace ReaderTest
 
             Assert.Throws<Exception>(() => reader.ValidateParameters(date1, date2, code));
         }
-        
-        
+
+
         [Test]
-        [TestCase("04-01-1999", "05-02-2000",2)]
+        [TestCase("04-01-1999", "05-02-2020", 2)]
         public void ReadFromModule2_GoodRead_Equals(string data1, string data2, int code)
         {
-            Reader reader = new Reader(mockedLogger, mockedModul2Proxy);
-            List<IModule2Property> list = mockedModul2Proxy.ReadHistory(DateTime.Parse(data1), DateTime.Parse(data2), (SignalCode)code);
-
-
+            Mock<IModule2History> history = new Mock<IModule2History>();
+            var lista = new List<IModule2Property>();
+            history.Setup(x => x.ReadHistory(DateTime.Parse(data1), DateTime.Parse(data2), (SignalCode)code)).Returns(lista);
+            
+            Reader reader = new Reader(mockedLogger, history.Object);
+            
             string ret = reader.ReadFromModule2(data1, data2, code); //null reference, ne znam zasto?
             int num = Regex.Matches(ret, "\n").Count;
-            Assert.AreEqual(num, list.Count);
+            Assert.AreEqual(num, lista.Count);
         }
         
     }

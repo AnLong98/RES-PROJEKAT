@@ -33,7 +33,7 @@ namespace ReaderNS
             string ret = "";
             DateTime firstDate, secondDate;
             SignalCode sCode;
-            List<IModule2Property> list;
+            List<IModule2Property> list = new List<IModule2Property>();
 
             logger.LogNewInfo("Reader is validating data.");
 
