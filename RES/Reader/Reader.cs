@@ -29,7 +29,7 @@ namespace Reader
 
         public void ActivateReading()
         {
-
+            logger.LogNewInfo("Reader has been activated.");
         }
 
         public void ConnectToModul2()
@@ -39,7 +39,7 @@ namespace Reader
 
         public void Shutdown()
         {
-
+            logger.LogNewInfo("Reader is shutting down.");
         }
 
 
