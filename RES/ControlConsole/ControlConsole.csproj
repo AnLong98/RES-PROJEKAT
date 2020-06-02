@@ -111,6 +111,10 @@
       <Project>{7444B271-FA3B-4F07-A38B-DFAD3C1E9C4F}</Project>
       <Name>Module2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reader\Reader.csproj">
+      <Project>{1C897ECC-5329-4AB2-AA32-781D6999E8C3}</Project>
+      <Name>Reader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
