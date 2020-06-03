@@ -127,8 +127,20 @@ namespace Module2
         public void WriteToHistory(SignalCode code, double value)
         {
             logger.LogNewInfo(string.Format("Writing to history called for code {0} and value {1}", code, value));
+
             IModule2Property property = dataAdapter.PackToModule2Property(code, value);
-            databaseManager.WriteProperty(property);
+            IModule2Property lastProperty = databaseManager.ReadLastByCode(property.Code);
+
+            if (lastProperty == null)
+            {
+                logger.LogNewInfo(string.Format("No property found in database for signal code {0}. Writing directly without deadband checking..", property.Code));
+                databaseManager.WriteProperty(property);
+            }
+            else if (IsDeadbandSatisfied(lastProperty, property, deadbandPercentage))
+            {
+                databaseManager.WriteProperty(property);
+            }
+
         }
 
         
