@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader", "Reader\Reader.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReaderTest", "ReaderTest\ReaderTest.csproj", "{247AD0D3-5CFD-45B2-8029-81A892E5739C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTest", "CommonTest\CommonTest.csproj", "{FDEC2C8C-3FE7-46D3-9FDF-336ABD68C2BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{247AD0D3-5CFD-45B2-8029-81A892E5739C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{247AD0D3-5CFD-45B2-8029-81A892E5739C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{247AD0D3-5CFD-45B2-8029-81A892E5739C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDEC2C8C-3FE7-46D3-9FDF-336ABD68C2BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDEC2C8C-3FE7-46D3-9FDF-336ABD68C2BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDEC2C8C-3FE7-46D3-9FDF-336ABD68C2BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDEC2C8C-3FE7-46D3-9FDF-336ABD68C2BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
