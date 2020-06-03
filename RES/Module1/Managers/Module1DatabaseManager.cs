@@ -31,7 +31,7 @@ namespace Modul1
         {
             this.logger = logger;
             this.databaseName = databaseName;
-            string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\" + databaseName;
+            string path = databaseName; //@"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\" + databaseName;
             if (!File.Exists(path)) throw new Exception("Database does not exist");
             
             databaseConnection = new SQLiteConnection(string.Format(@"Data Source={0};New=False;", path));

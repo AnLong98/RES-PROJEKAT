@@ -18,7 +18,7 @@ namespace Module2Test.ManagersTest
         private string correctDatabaseName = "res_module2.db";
         private string testDatabaseName = "res_module2_test.db";
         private string wrongDatabaseName = "some_wrong_name.db";
-        private string path = @"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\";
+        private string path = ""; //@"C:\Users\Predrag\Source\Repos\RES-PROJEKAT\RES\";
         Mock<ILogging> loggingMock;
 
         [SetUp]
