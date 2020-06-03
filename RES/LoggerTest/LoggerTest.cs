@@ -24,6 +24,10 @@ namespace LoggerTest
         }
 
 
+
+
+        /*These test access file system, therefore they are not in accordance with unit test standards. We will comment them out for now*/
+        /*
         [Test]
         [TestCase("Somefile", "Some message")]
         [TestCase("Somefile", "Some message\r\nnewlinemessage")]
@@ -58,6 +62,7 @@ namespace LoggerTest
 
 
         }
+        */
 
     }
 }

@@ -39,7 +39,8 @@ namespace LoggerTest
             Assert.DoesNotThrow(() => new LogWriter(filename));
         }
 
-
+        /*These test access file system, therefore they are not in accordance with unit test standards. We will comment them out for now*/
+        /*
         [Test]
         [TestCase("someNonExistingFileName")]
         public void WriteToFile_NonExistingFile_FileCreated(string filename)
@@ -89,5 +90,6 @@ namespace LoggerTest
             Assert.AreEqual(messages[1], secondMessage);
             
         }
+        */
     }
 }
