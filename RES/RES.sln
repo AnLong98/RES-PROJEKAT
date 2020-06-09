@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{D28BAD7F-003B-446B-A018-68F233656D25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{DE8C8630-2B3E-4570-BA68-98BFC003A86C}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\RES.EAP = ..\..\..\..\Desktop\RES.EAP
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Input", "Input\Input.csproj", "{80B54FF3-A213-4601-B64E-A3E45CD9ADFF}"
 EndProject
