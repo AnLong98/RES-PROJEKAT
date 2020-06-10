@@ -123,6 +123,5 @@ namespace ReaderTest
             int num = Regex.Matches(ret, "\n").Count;
             Assert.AreEqual(num, lista.Count);
         }
-
     }
 }

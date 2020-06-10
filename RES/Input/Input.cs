@@ -47,13 +47,30 @@ namespace InputNS
         
         public void GenerateSignals()
         {
-            while(true)
+            while (true)
             {
                 Random rand = new Random();
 
                 int code = rand.Next(8);
-                double value = rand.NextDouble() * 1001;
+                double value = 0;
 
+                if (code != 1)
+                {
+                    value = rand.NextDouble() * 1001;
+                }
+                else
+                {
+                    bool result = rand.Next(0, 2) != 0;
+
+                    if (result)
+                    {
+                        value = 1.0;
+                    }
+                    else
+                    {
+                        value = 0.0;
+                    }
+                }
                 logger.LogNewInfo(String.Format("Input started generating signals and sending it to Modul1 with values {0} - {1}.", code, value));
                 module1Proxy.UpdateDataset(value, (SignalCode)code);
 
