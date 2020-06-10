@@ -60,16 +60,7 @@ namespace InputNS
                 }
                 else
                 {
-                    bool result = rand.Next(0, 2) != 0;
-
-                    if (result)
-                    {
-                        value = 1.0;
-                    }
-                    else
-                    {
-                        value = 0.0;
-                    }
+                    value = rand.Next(0, 1);
                 }
                 logger.LogNewInfo(String.Format("Input started generating signals and sending it to Modul1 with values {0} - {1}.", code, value));
                 module1Proxy.UpdateDataset(value, (SignalCode)code);
