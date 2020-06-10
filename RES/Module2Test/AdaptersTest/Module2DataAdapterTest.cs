@@ -42,6 +42,15 @@ namespace Module2Test.AdaptersTest
             Assert.AreEqual(value, module2Property.Value);
         }
 
+        [Test]
+        [TestCase(SignalCode.CODE_DIGITAL, -1)]
+        [TestCase(SignalCode.CODE_DIGITAL, 2)]
+        public void PackToModule2Property_IRegularParameters_AssertThrowsException(SignalCode signal, double value)
+        {
+            Assert.Throws<ArgumentException>(() => adapter.PackToModule2Property(signal, value));
+
+        }
+
 
         [Test]
         [TestCase(SignalCode.CODE_ANALOG, 20.5)]

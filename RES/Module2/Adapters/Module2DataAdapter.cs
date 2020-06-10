@@ -35,6 +35,11 @@ namespace Module2 {
 	    /// <param name="value">Signal value</param>
 	    public IModule2Property PackToModule2Property(SignalCode signal, double value){
             logger.LogNewInfo(string.Format("Packing module 2 property for signal {0} and value {1}", signal, value));
+            if(signal == SignalCode.CODE_DIGITAL && value != 1 && value != 0)
+            {
+                logger.LogNewWarning("Signal code digital cannot have value other than 0 or 1");
+                throw new ArgumentException("ERROR Signal code digital cannot have value other than 0 or 1");
+            }
             return new Module2Property(signal, value);
 	    }
 

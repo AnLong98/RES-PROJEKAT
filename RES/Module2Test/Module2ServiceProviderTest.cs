@@ -68,7 +68,7 @@ namespace Module2Test
         [Test]
         [TestCase(100, 102.0, 2, Result = true)]
         [TestCase(100, 100.0, 2, Result = true)]
-        public bool IsDeadbandSatisfied_CODEANALOG_ReturnsTrue(double oldValue, double newValue, double percentageDeadband)
+        public bool IsDeadbandSatisfied_CODEDIGITAL_ReturnsTrue(double oldValue, double newValue, double percentageDeadband)
         {
             IModule2Property oldProperty = MockModule2Property(SignalCode.CODE_DIGITAL, oldValue);
             IModule2Property newProperty = MockModule2Property(SignalCode.CODE_DIGITAL, newValue);
@@ -81,13 +81,29 @@ namespace Module2Test
 
         [Test]
         [TestCase(SignalCode.CODE_ANALOG, 200)]
-        public void WriteToHistory_MockedAdapterAndManager_AssertNumberOfCalls(SignalCode code, double value)
+        public void WriteToHistory_DeadbandUnsatisfied_AssertWriteToDatabaseNotCalled(SignalCode code, double value)
         {
+            mockedAdapter.Setup(x => x.PackToModule2Property(code, value)).Returns(MockModule2Property(code, value));
+            mockedManager.Setup(x => x.ReadLastByCode(code)).Returns(MockModule2Property(code, value));
 
             providerFullyMocked.WriteToHistory(code, value);
 
-            mockedManager.Verify(x => x.WriteProperty(It.IsAny<IModule2Property>()), Times.Exactly(1));
-            mockedAdapter.Verify(x => x.PackToModule2Property(code, value), Times.Exactly(1));
+            mockedManager.Verify(x => x.WriteProperty(It.IsAny<IModule2Property>()), Times.Never);
+            mockedAdapter.Verify(x => x.PackToModule2Property(code, value), Times.Once);
+
+        }
+
+
+        [Test]
+        [TestCase(SignalCode.CODE_ANALOG, 200)]
+        public void WriteToHistory_DeadbandSatisfied_AssertWriteToDatabaseCalled(SignalCode code, double value)
+        {
+            mockedAdapter.Setup(x => x.PackToModule2Property(code, value)).Returns(MockModule2Property(code, value));
+
+            providerFullyMocked.WriteToHistory(code, value);
+
+            mockedManager.Verify(x => x.WriteProperty(It.IsAny<IModule2Property>()), Times.Once);
+            mockedAdapter.Verify(x => x.PackToModule2Property(code, value), Times.Once);
 
         }
 

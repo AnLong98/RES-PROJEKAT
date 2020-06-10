@@ -95,6 +95,10 @@ namespace InputNS
             {
                 logger.LogNewWarning("User sent invalid data for signal.");
                 throw new Exception("The value of signal does not match specified interval!");
+            }else if(signal == 1 &&  value != 1 && value != 0)
+            {
+                logger.LogNewWarning("User sent invalid data for digital signal value.");
+                throw new Exception("Value for digital signal should be 0 or 1!");
             }
             else
             {

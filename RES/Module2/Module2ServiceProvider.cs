@@ -127,8 +127,22 @@ namespace Module2
         public void WriteToHistory(SignalCode code, double value)
         {
             logger.LogNewInfo(string.Format("Writing to history called for code {0} and value {1}", code, value));
+            IModule2Property property = null;
+            try
+            {
+                property = dataAdapter.PackToModule2Property(code, value);
+            }
+            catch (ArgumentException)
+            {
+                logger.LogNewWarning("Argument exception thrown by data adapter, aborting all operations.");
+                return;
+            }
+            catch (Exception)
+            {
+                logger.LogNewWarning("Unknown exception thrown by data adapter, aborting all operations.");
+                return;
+            }
 
-            IModule2Property property = dataAdapter.PackToModule2Property(code, value);
             IModule2Property lastProperty = databaseManager.ReadLastByCode(property.Code);
 
             if (lastProperty == null)

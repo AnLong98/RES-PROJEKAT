@@ -51,6 +51,8 @@ namespace InputTest
         [TestCase(10, 231.0)]
         [TestCase(4, -213.0)]
         [TestCase(-2, -2.0)]
+        [TestCase(1, 0.1)]
+        [TestCase(1, 2)]
         public void SendSignal_BadParameters_DoesThrow(int signal, double value)
         {
 
